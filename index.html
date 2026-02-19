@@ -397,7 +397,7 @@ body {
     </div>
 
     <!-- FORMULÁRIO NETLIFY -->
-    <form name="raiox-maturidade" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="raiox-form">
+    <form name="raiox-maturidade" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="raiox-form" action="/sucesso.html">
       <input type="hidden" name="form-name" value="raiox-maturidade">
       <p style="display:none"><input name="bot-field"></p>
 
@@ -659,32 +659,8 @@ function selectFormato(el, val) {
   document.getElementById('formato-hidden').value = val;
 }
 
-// SUBMIT - envia nativamente para o Netlify e mostra tela de sucesso
-document.getElementById('raiox-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const form = this;
-  const data = new FormData(form);
-
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(data).toString()
-  })
-  .then(response => {
-    if (response.ok || response.status === 200 || response.redirected) {
-      form.style.display = 'none';
-      document.getElementById('success').classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      // tenta submit nativo como fallback
-      form.submit();
-    }
-  })
-  .catch(() => {
-    // fallback: submit nativo
-    form.submit();
-  });
-});
+// SUBMIT - deixa o Netlify processar nativamente, sem interceptar
+// O Netlify vai redirecionar para a página de sucesso automaticamente
 
 updateProgress();
 </script>
