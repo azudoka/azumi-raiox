@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raio-X de Maturidade | Azumi RH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:        #0D2240;
+      --blue:        #1A4080;
+      --blue-mid:    #1E5799;
+      --accent:      #2E7DD1;
+      --accent-light:#D6E8FA;
+      --white:       #FFFFFF;
+      --off-white:   #F4F7FC;
+      --gray-100:    #EEF2F8;
+      --gray-300:    #C5D0E0;
+      --gray-500:    #8898B0;
+      --gray-700:    #4A5A72;
+      --text:        #1A2940;
+      --border:      #CBD8EE;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -60px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(46,125,209,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent) 0%, #4EAEFF 50%, var(--accent) 100%);
+    }
+
+    .hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 52px 40px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      display: inline-flex;
+      align-items: baseline;
+      margin-bottom: 32px;
+      line-height: 1;
+    }
+
+    .logo-azumi {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 30px;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-rh {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 30px;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(46,125,209,0.18);
+      border: 1px solid rgba(46,125,209,0.38);
+      color: #7EC8F8;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 34px;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* ── CLIENT BAR ── */
+    .client-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(13,34,64,0.07);
+    }
+
+    .client-bar-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-group label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .field-group input,
+    .field-group textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      background: var(--off-white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+    }
+
+    .field-group input:focus,
+    .field-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(46,125,209,0.12);
+      background: var(--white);
+    }
+
+    .field-group input::placeholder,
+    .field-group textarea::placeholder { color: var(--gray-300); }
+
+    /* ── MAIN ── */
+    .main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 40px 60px;
+    }
+
+    /* INTRO CARD */
+    .intro-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-bottom: 36px;
+    }
+
+    .intro-card p {
+      font-size: 13.5px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--gray-700);
+    }
+
+    .intro-card strong { font-weight: 600; color: var(--navy); }
+
+    /* PILAR SECTION */
+    .pilar { margin-bottom: 32px; }
+
+    .pilar-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .pilar-num {
+      width: 46px; height: 46px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .pilar-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .pilar-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--navy);
+    }
+
+    /* QUESTION CARD */
+    .q-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .q-card:focus-within { border-color: var(--accent); }
+
+    .q-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .q-num {
+      width: 26px; height: 26px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .q-text {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .q-text em {
+      font-style: normal;
+      font-weight: 400;
+      color: var(--gray-500);
+      font-size: 12.5px;
+    }
+
+    .q-card textarea {
+      width: 100%;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+      background: var(--off-white);
+      resize: vertical;
+      min-height: 88px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      line-height: 1.7;
+    }
+
+    .q-card textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(46,125,209,0.10);
+      background: var(--white);
+    }
+
+    .q-card textarea::placeholder {
+      color: var(--gray-300);
+      font-style: italic;
+      font-size: 12.5px;
+    }
+
+    /* EXTRA SECTION */
+    .extra-section {
+      background: var(--gray-100);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 26px;
+      margin-bottom: 32px;
+    }
+
+    .extra-section h3 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .extra-section .sub {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--gray-500);
+      margin-bottom: 18px;
+    }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .deadline-box {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .deadline-box .dl-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .deadline-box .dl-val {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    .deadline-box .dl-badge {
+      background: var(--accent);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* SUBMIT */
+    .submit-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 28px;
+    }
+
+    .submit-note {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--gray-500);
+      line-height: 1.6;
+      max-width: 360px;
+    }
+
+    .submit-note strong { font-weight: 600; color: var(--navy); }
+
+    .btn-submit {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      padding: 16px 38px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(13,34,64,0.28);
+      white-space: nowrap;
+    }
+
+    .btn-submit:hover {
+      background: var(--blue-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(13,34,64,0.32);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    /* FOOTER */
+    .footer {
+      background: var(--navy);
+      padding: 26px 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #4EAEFF, var(--accent));
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: baseline;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .footer-logo .fl-a {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 20px;
+      color: var(--white);
+    }
+
+    .footer-logo .fl-rh {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--accent);
+    }
+
+    .footer p { font-size: 11.5px; font-weight: 300; color: rgba(255,255,255,0.4); }
+    .footer .tagline { font-size: 11px; color: rgba(255,255,255,0.3); font-style: italic; margin-top: 4px; }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white !important; }
+      .hero, .footer, .deadline-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .btn-submit, .submit-wrap { display: none !important; }
+      .main { padding: 20px 40px 40px; }
+      .q-card { break-inside: avoid; page-break-inside: avoid; }
+      .pilar { break-inside: avoid; }
+      .q-card textarea {
+        border: 1.5px solid #CBD8EE !important;
+        min-height: 60px;
+        background: #F4F7FC !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      @page { margin: 0.6cm; size: A4; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero-inner { padding: 36px 20px 32px; }
+      .hero h1 { font-size: 24px; }
+      .client-bar-inner { grid-template-columns: 1fr; padding: 20px; }
+      .main { padding: 24px 20px 48px; }
+      .extra-grid { grid-template-columns: 1fr; }
+      .submit-wrap { flex-direction: column; align-items: stretch; text-align: center; }
+      .deadline-box { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<form
+  action="https://formspree.io/f/xlgwwbej"
+  method="POST"
+  autocomplete="on"
+>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo">
+        <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+      </div>
+      <div class="hero-tag">Diagnóstico Estratégico</div>
+      <h1>Raio-X de <span>Maturidade</span><br/>de Capital Humano</h1>
+      <p class="hero-sub">Análise da sua Matriz de Maturidade de RH. Vamos identificar os seus pontos cegos e definir as 3 prioridades estratégicas do seu time.</p>
+    </div>
+  </div>
+
+  <!-- ── DADOS DO CLIENTE ── -->
+  <div class="client-bar">
+    <div class="client-bar-inner">
+      <div class="field-group">
+        <label>Nome do Responsável</label>
+        <input type="text" name="nome_responsavel" placeholder="Seu nome completo" required />
+      </div>
+      <div class="field-group">
+        <label>Empresa</label>
+        <input type="text" name="empresa" placeholder="Nome da empresa" required />
+      </div>
+      <div class="field-group">
+        <label>E-mail para contato</label>
+        <input type="email" name="email" placeholder="seu@email.com.br" required />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <div class="intro-card">
+      <p>Este questionário foi desenvolvido para entender de forma profunda a realidade atual do seu RH. <strong>Não existe resposta certa ou errada</strong> — quanto mais honesto e detalhado você for, mais preciso e útil será o seu diagnóstico. Todas as informações são tratadas com total <strong>confidencialidade</strong> pela equipe Azumi RH.</p>
+    </div>
+
+    <!-- ══ PILAR 01 — PESSOAS & LIDERANÇA ══ -->
+    <div class="pilar">
+      <div class="pilar-header">
+        <div class="pilar-num">01</div>
+        <div class="pilar-title-wrap">
+          <div class="pilar-label">Pilar 01</div>
+          <div class="pilar-title">Pessoas &amp; Liderança</div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">A</div>
+          <div class="q-text">Seus gestores têm uma rotina de feedback e 1:1, ou cada um decide e cobra do seu jeito?</div>
+        </div>
+        <textarea name="p1_feedback_rotina" placeholder="Descreva como funciona hoje na prática: existe cadência definida, periodicidade, algum padrão mínimo?"></textarea>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">B</div>
+          <div class="q-text">Quais são as 2 áreas que mais te dão dor de cabeça hoje? <em>(conflitos, rotatividade, falta de braço técnico…)</em></div>
+        </div>
+        <textarea name="p1_dores_areas" placeholder="Ex: Comercial tem alta rotatividade; TI sofre com ausência de liderança técnica…"></textarea>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">C</div>
+          <div class="q-text">Quando um colaborador sai da empresa, vocês fazem entrevista de desligamento? O que costuma ser apontado como motivo de saída?</div>
+        </div>
+        <textarea name="p1_entrevista_desligamento" placeholder="Se não fazem entrevista de desligamento, escreva 'não fazemos' — isso já é uma informação relevante para o diagnóstico."></textarea>
+      </div>
+    </div>
+
+    <!-- ══ PILAR 02 — PROCESSOS & FLUXOS ══ -->
+    <div class="pilar">
+      <div class="pilar-header">
+        <div class="pilar-num">02</div>
+        <div class="pilar-title-wrap">
+          <div class="pilar-label">Pilar 02</div>
+          <div class="pilar-title">Processos &amp; Fluxos Operacionais</div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">A</div>
+          <div class="q-text">O que você tem de "preto no branco" hoje? <em>(Manual de conduta, fluxo de admissão, regras de férias, processo de desligamento…)</em></div>
+        </div>
+        <textarea name="p2_documentos_existentes" placeholder="Liste o que existe documentado, mesmo que não seja aplicado formalmente no dia a dia."></textarea>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">B</div>
+          <div class="q-text">Como vocês fecham uma vaga hoje? Existe um método padrão ou é no "feeling"?</div>
+        </div>
+        <textarea name="p2_processo_selecao" placeholder="Descreva as etapas: onde divulgam, quem entrevista, como decidem, qual o prazo médio…"></textarea>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">C</div>
+          <div class="q-text">Como é o onboarding de um novo colaborador? Existe um roteiro de integração estruturado ou cada gestor recebe à sua maneira?</div>
+        </div>
+        <textarea name="p2_onboarding" placeholder="Descreva o que acontece nos primeiros 30 dias: treinamentos, apresentações, acompanhamento, metas de adaptação…"></textarea>
+      </div>
+    </div>
+
+    <!-- ══ PILAR 03 — PERFORMANCE & DADOS ══ -->
+    <div class="pilar">
+      <div class="pilar-header">
+        <div class="pilar-num">03</div>
+        <div class="pilar-title-wrap">
+          <div class="pilar-label">Pilar 03</div>
+          <div class="pilar-title">Performance &amp; Dados</div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">A</div>
+          <div class="q-text">Quais números sobre o time você olha hoje — ou gostaria de olhar? <em>(Ex: turnover, custo de vaga, produtividade)</em></div>
+        </div>
+        <textarea name="p3_indicadores" placeholder="Se não acompanha nenhum indicador agora, escreva 'nenhum' — isso já é uma informação valiosa."></textarea>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">B</div>
+          <div class="q-text">Quando alguém não entrega o esperado, qual é a conduta real da empresa? <em>(plano de ação, conversa técnica, ou "deixa passar"?)</em></div>
+        </div>
+        <textarea name="p3_conduta_performance" placeholder="Seja honesto sobre o que realmente acontece, não o que deveria acontecer."></textarea>
+      </div>
+
+      <div class="q-card">
+        <div class="q-label">
+          <div class="q-num">C</div>
+          <div class="q-text">Existe alguma meta ou critério claro de performance definido por cargo? Os colaboradores sabem exatamente o que é esperado deles em termos de resultado?</div>
+        </div>
+        <textarea name="p3_metas_criterios" placeholder="Ex: existe OKR, meta de vendas, indicadores por área? Ou a expectativa é informal e varia por gestor?"></textarea>
+      </div>
+    </div>
+
+    <!-- ══ DADOS COMPLEMENTARES ══ -->
+    <div class="extra-section">
+      <h3>📋 Dados Complementares</h3>
+      <p class="sub">Não precisa de nada formal — mande o que tiver disponível.</p>
+
+      <div class="extra-grid">
+        <div class="field-group">
+          <label>Total de colaboradores hoje</label>
+          <input type="text" name="total_colaboradores" placeholder="Ex: 32 pessoas" />
+        </div>
+        <div class="field-group">
+          <label>Principais áreas / departamentos</label>
+          <input type="text" name="principais_areas" placeholder="Ex: Comercial, TI, Operações, CS" />
+        </div>
+        <div class="field-group">
+          <label>Contratações nos últimos 6 meses</label>
+          <input type="text" name="contratacoes_6m" placeholder="Ex: 8 contratações" />
+        </div>
+        <div class="field-group">
+          <label>Desligamentos nos últimos 6 meses</label>
+          <input type="text" name="desligamentos_6m" placeholder="Ex: 5 (3 pedidos, 2 demitidos)" />
+        </div>
+      </div>
+
+      <div class="field-group" style="margin-bottom: 16px;">
+        <label>Documento de RH atual <span style="text-transform:none;letter-spacing:0;font-weight:400;font-size:10px;">(opcional — cole um trecho ou descreva)</span></label>
+        <textarea name="documento_rh_exemplo" style="min-height:76px;" placeholder="Qualquer documento que já usam: regra interna, comunicado, descrição de cargo…"></textarea>
+      </div>
+
+      <div class="deadline-box">
+        <div>
+          <div class="dl-label">⏱ Prazo para envio das respostas</div>
+          <div class="dl-val">Até 24h após o recebimento deste formulário</div>
+        </div>
+        <div class="dl-badge">Prazo importante</div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <p class="submit-note">Após o envio, nossa equipe analisa suas respostas e entrega o seu Raio-X exclusivo em até <strong>36h úteis</strong>. Todas as informações são tratadas com total confidencialidade.</p>
+      <button type="submit" class="btn-submit">Enviar Respostas &rarr;</button>
+    </div>
+
+  </div><!-- /main -->
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <div class="footer-logo">
+      <span class="fl-a">azumi</span><span class="fl-rh">RH</span>
+    </div>
+    <p>(41) 98835-0743 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="20434f4e5441544f60415a554d4952480e434f4d0e4252">[email&#160;protected
