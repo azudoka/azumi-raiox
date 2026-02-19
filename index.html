@@ -397,9 +397,9 @@ body {
     </div>
 
     <!-- FORMULÁRIO NETLIFY -->
-    <form name="raiox-maturidade" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="raiox-form">
+    <form name="raiox-maturidade" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="raiox-form">
       <input type="hidden" name="form-name" value="raiox-maturidade">
-      <input type="hidden" name="bot-field" style="display:none">
+      <p style="display:none"><input name="bot-field"></p>
 
       <!-- STEP 1: IDENTIFICAÇÃO -->
       <div class="step active" id="step-1">
@@ -659,20 +659,30 @@ function selectFormato(el, val) {
   document.getElementById('formato-hidden').value = val;
 }
 
-// SUBMIT
+// SUBMIT - envia nativamente para o Netlify e mostra tela de sucesso
 document.getElementById('raiox-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const data = new FormData(this);
+  const form = this;
+  const data = new FormData(form);
+
   fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(data).toString()
-  }).then(() => {
-    this.style.display = 'none';
-    document.getElementById('success').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }).catch(() => {
-    alert('Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp: (41) 98835-0743');
+  })
+  .then(response => {
+    if (response.ok || response.status === 200 || response.redirected) {
+      form.style.display = 'none';
+      document.getElementById('success').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // tenta submit nativo como fallback
+      form.submit();
+    }
+  })
+  .catch(() => {
+    // fallback: submit nativo
+    form.submit();
   });
 });
 
