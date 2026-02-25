@@ -524,31 +524,31 @@
     </div>
   </div>
 
-<div style="background-color: var(--off-white); padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid var(--border);">
-  <h2 style="font-size: 18px; color: var(--navy); margin-top: 0; margin-bottom: 16px;">Seus Dados</h2>
+<div class="client-bar">
+  <div class="client-bar-inner" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+    
+    <div class="field-group" style="flex: 1; min-width: 180px;">
+      <label>Nome do Responsável</label>
+      <input type="text" name="nome_responsavel" placeholder="Seu nome" required />
+    </div>
 
-  <div class="field-group">
-    <label>Nome do Responsável</label>
-    <input type="text" name="nome_responsavel" placeholder="Seu nome completo" required />
-  </div>
+    <div class="field-group" style="flex: 1; min-width: 180px;">
+      <label>Empresa</label>
+      <input type="text" name="empresa" placeholder="Nome da empresa" required />
+    </div>
 
-  <div class="field-group">
-    <label>Empresa</label>
-    <input type="text" name="empresa" placeholder="Nome da empresa" required />
-  </div>
-
-  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-    <div class="field-group" style="flex: 1; min-width: 200px;">
+    <div class="field-group" style="flex: 1; min-width: 180px;">
       <label>E-mail para contato</label>
       <input type="email" name="email" placeholder="seu@email.com.br" required />
     </div>
 
-    <div class="field-group" style="flex: 1; min-width: 200px;">
+    <div class="field-group" style="flex: 1; min-width: 180px;">
       <label>Telefone / WhatsApp</label>
-      <input type="tel" name="whatsapp" placeholder="Ex: (11) 99999-9999" required />
+      <input type="tel" name="whatsapp" placeholder="(11) 99999-9999" required />
     </div>
+
   </div>
-  </div>
+</div>
 
   <!-- ── MAIN ── -->
   <div class="main">
