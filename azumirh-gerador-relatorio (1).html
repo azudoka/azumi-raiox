@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Relatório | Azumi RH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+  <style>
+    /* ══════════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════════ */
+    :root {
+      --navy:        #0D2240;
+      --blue:        #1A4080;
+      --blue-mid:    #1E5799;
+      --accent:      #2E7DD1;
+      --accent-light:#D6E8FA;
+      --white:       #FFFFFF;
+      --off-white:   #F4F7FC;
+      --gray-50:     #F8FAFD;
+      --gray-100:    #EEF2F8;
+      --gray-200:    #DDE5F0;
+      --gray-300:    #C5D0E0;
+      --gray-500:    #8898B0;
+      --gray-700:    #4A5A72;
+      --text:        #1A2940;
+      --border:      #CBD8EE;
+      --green:       #1B8A5A;
+      --green-light: #D4EDDA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ══════════════════════════════════════════
+       APP SHELL — EDITOR MODE (default)
+    ══════════════════════════════════════════ */
+    #editor-view { display: block; }
+    #preview-view { display: none; }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(13,34,64,0.4);
+    }
+
+    .topnav::after {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #4EAEFF, var(--accent));
+    }
+
+    .topnav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .nav-logo {
+      display: inline-flex;
+      align-items: baseline;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .nav-logo .nl-a {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 20px;
+      color: var(--white);
+    }
+
+    .nav-logo .nl-rh {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--accent);
+    }
+
+    .nav-badge {
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(46,125,209,0.2);
+      border: 1px solid rgba(46,125,209,0.35);
+      color: #7EC8F8;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.75);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(255,255,255,0.5);
+      color: var(--white);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 3px 12px rgba(46,125,209,0.4);
+    }
+
+    .btn-primary:hover {
+      background: #2570BE;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 16px rgba(46,125,209,0.5);
+    }
+
+    .btn-back {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.15);
+    }
+
+    .btn-back:hover { background: rgba(255,255,255,0.18); }
+
+    .btn-print {
+      background: var(--navy);
+      color: var(--white);
+      box-shadow: 0 3px 12px rgba(13,34,64,0.3);
+    }
+
+    .btn-print:hover {
+      background: var(--blue);
+      transform: translateY(-1px);
+    }
+
+    /* ── EDITOR LAYOUT ── */
+    .editor-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 36px 32px 60px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: sticky;
+      top: 78px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      background: var(--navy);
+      padding: 16px 18px;
+    }
+
+    .sidebar-header h3 {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .sidebar-nav { padding: 8px 0; }
+
+    .snav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--gray-700);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .snav-item:hover { background: var(--gray-50); color: var(--navy); }
+    .snav-item.active { background: var(--accent-light); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+    .snav-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gray-300);
+      flex-shrink: 0;
+    }
+
+    .snav-item.active .snav-dot { background: var(--accent); }
+
+    /* FORM SECTIONS */
+    .form-section {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .section-head {
+      background: var(--navy);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-head-num {
+      width: 32px; height: 32px;
+      background: rgba(46,125,209,0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: #7EC8F8;
+      flex-shrink: 0;
+    }
+
+    .section-head-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    .section-body { padding: 22px 24px; }
+
+    /* FORM FIELDS */
+    .field-row {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      background: var(--off-white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(46,125,209,0.1);
+      background: var(--white);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--gray-300); font-size: 12.5px; }
+
+    .field textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
+
+    /* PILAR CARD IN EDITOR */
+    .pilar-card {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .pilar-card-head {
+      background: var(--gray-100);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pch-num {
+      width: 28px; height: 28px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .pch-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--navy);
+    }
+
+    .pilar-card-body { padding: 16px; }
+
+    /* LEVEL SELECTOR */
+    .level-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .level-btn {
+      flex: 1;
+      min-width: 0;
+      padding: 8px 4px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+
+    .level-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .level-btn.selected {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: var(--white);
+    }
+
+    /* PRIORITY CARDS */
+    .priority-card {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .priority-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .priority-num {
+      width: 24px; height: 24px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .priority-label span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    /* ── GENERATE BTN AREA ── */
+    .generate-bar {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .generate-bar p {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+
+    .generate-bar strong { font-weight: 700; color: var(--navy); }
+
+    .btn-generate {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      padding: 14px 30px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 18px rgba(13,34,64,0.3);
+      white-space: nowrap;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 22px rgba(13,34,64,0.38);
+    }
+
+    /* ══════════════════════════════════════════
+       PREVIEW / REPORT VIEW
+    ══════════════════════════════════════════ */
+    #preview-view {
+      background: #8898B0;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    .preview-topbar {
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 62px;
+      gap: 20px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .preview-topbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #4EAEFF, var(--accent));
+    }
+
+    .preview-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* A4 PAPER */
+    .paper {
+      width: 794px;
+      min-height: 1123px;
+      background: var(--white);
+      margin: 32px auto;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    /* REPORT HERO */
+    .r-hero {
+      background: var(--navy);
+      position: relative;
+      padding: 40px 48px 36px;
+      overflow: hidden;
+    }
+
+    .r-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -40px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(46,125,209,0.2) 0%, transparent 70%);
+    }
+
+    .r-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent) 0%, #4EAEFF 50%, var(--accent) 100%);
+    }
+
+    .r-logo {
+      display: inline-flex;
+      align-items: baseline;
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+
+    .r-logo .rl-a {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--white);
+    }
+
+    .r-logo .rl-rh {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 26px;
+      color: var(--accent);
+    }
+
+    .r-doc-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--white);
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .r-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 6px 28px;
+    }
+
+    .r-meta-item {}
+    .r-meta-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2px;
+    }
+
+    .r-meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* REPORT BODY */
+    .r-body { padding: 36px 48px 48px; }
+
+    /* SECTION TITLE */
+    .r-sec-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    .r-section { margin-bottom: 28px; }
+
+    /* EXEC SUMMARY */
+    .r-summary-text {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--gray-700);
+      line-height: 1.85;
+    }
+
+    /* PILAR BLOCK */
+    .r-pilar {
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .r-pilar-head {
+      background: var(--navy);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .r-pilar-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--white);
+    }
+
+    .r-pilar-level {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .r-level-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .r-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .r-dot.active { background: var(--accent); }
+
+    .r-level-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      margin-left: 4px;
+    }
+
+    .r-pilar-body { padding: 14px 16px; }
+
+    .r-pilar-row {
+      margin-bottom: 10px;
+    }
+
+    .r-pilar-row:last-child { margin-bottom: 0; }
+
+    .r-pilar-row-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .r-pilar-row-text {
+      font-size: 12.5px;
+      font-weight: 300;
+      color: var(--gray-700);
+      line-height: 1.7;
+    }
+
+    /* PRIORITIES */
+    .r-priorities { display: flex; flex-direction: column; gap: 10px; }
+
+    .r-priority {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--gray-50);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .r-priority-num {
+      width: 28px; height: 28px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .r-priority-content {}
+
+    .r-priority-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 3px;
+    }
+
+    .r-priority-text {
+      font-size: 12.5px;
+      font-weight: 300;
+      color: var(--gray-700);
+      line-height: 1.65;
+    }
+
+    /* PARECER */
+    .r-parecer-box {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+
+    .r-parecer-box p {
+      font-size: 12.5px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.75;
+    }
+
+    .r-parecer-box strong {
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .r-model-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .r-model-badge {
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 10px 14px;
+      flex: 1;
+    }
+
+    .r-model-badge-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .r-model-badge-val {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* OFERTA */
+    .r-oferta {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+      border-radius: 10px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .r-oferta::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(46,125,209,0.3) 0%, transparent 70%);
+    }
+
+    .r-oferta-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #7EC8F8;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .r-oferta p {
+      font-size: 12.5px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .r-oferta strong { font-weight: 700; color: var(--white); }
+
+    .r-oferta-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    /* REPORT FOOTER */
+    .r-footer {
+      background: var(--navy);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .r-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #4EAEFF, var(--accent));
+    }
+
+    .rf-logo {
+      display: inline-flex;
+      align-items: baseline;
+      line-height: 1;
+    }
+
+    .rf-logo .rfl-a {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--white);
+    }
+
+    .rf-logo .rfl-rh {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--accent);
+    }
+
+    .rf-contact {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .rf-tagline {
+      font-size: 10px;
+      font-style: italic;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ══════════════════════════════════════════
+       PRINT
+    ══════════════════════════════════════════ */
+    @media print {
+      #editor-view { display: none !important; }
+      #preview-view { display: block !important; background: white !important; padding: 0 !important; }
+      .preview-topbar { display: none !important; }
+      .paper {
+        width: 100% !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+      .r-hero, .r-footer, .r-pilar-head, .r-parecer-box, .r-oferta {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      @page { margin: 0; size: A4; }
+    }
+
+    /* ══════════════════════════════════════════
+       MISC
+    ══════════════════════════════════════════ */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .tip-box {
+      background: var(--accent-light);
+      border: 1px solid rgba(46,125,209,0.25);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--blue);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 760px) {
+      .editor-wrap { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .field-row.cols-2, .field-row.cols-3 { grid-template-columns: 1fr; }
+      .paper { width: 100%; margin: 0; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     EDITOR VIEW
+════════════════════════════════════════ -->
+<div id="editor-view">
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="nav-logo">
+          <span class="nl-a">azumi</span><span class="nl-rh">RH</span>
+        </div>
+        <span class="nav-badge">Gerador de Relatório</span>
+      </div>
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="limparForm()">↺ Limpar</button>
+        <button class="btn btn-primary" onclick="gerarRelatorio()">▶ Gerar Relatório</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- EDITOR LAYOUT -->
+  <div class="editor-wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>Seções</h3>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="snav-item active" onclick="scrollTo('sec-meta')"><span class="snav-dot"></span> Identificação</div>
+        <div class="snav-item" onclick="scrollTo('sec-sumario')"><span class="snav-dot"></span> Sumário Executivo</div>
+        <div class="snav-item" onclick="scrollTo('sec-pilares')"><span class="snav-dot"></span> Pilares Estratégicos</div>
+        <div class="snav-item" onclick="scrollTo('sec-prioridades')"><span class="snav-dot"></span> Top 3 Prioridades</div>
+        <div class="snav-item" onclick="scrollTo('sec-parecer')"><span class="snav-dot"></span> Parecer Técnico</div>
+        <div class="snav-item" onclick="scrollTo('sec-oferta')"><span class="snav-dot"></span> Oferta Exclusiva</div>
+      </nav>
+    </aside>
+
+    <!-- FORM AREA -->
+    <div>
+
+      <!-- GENERATE BAR -->
+      <div class="generate-bar">
+        <p>Preencha os campos abaixo com base nas respostas do lead. Ao finalizar, clique em <strong>Gerar Relatório</strong> para visualizar e imprimir.</p>
+        <button class="btn-generate" onclick="gerarRelatorio()">▶ Gerar Relatório</button>
+      </div>
+
+      <!-- 1. IDENTIFICAÇÃO -->
+      <div class="form-section" id="sec-meta">
+        <div class="section-head">
+          <div class="section-head-num">1</div>
+          <div class="section-head-title">Identificação do Documento</div>
+        </div>
+        <div class="section-body">
+          <div class="field-row cols-2">
+            <div class="field">
+              <label>Nome da Empresa</label>
+              <input type="text" id="f-empresa" placeholder="Ex: Vortex Tecnologia (PME | B2B SaaS)" />
+            </div>
+            <div class="field">
+              <label>Código do Documento</label>
+              <input type="text" id="f-codigo" placeholder="Ex: RX-2026-019" />
+            </div>
+          </div>
+          <div class="field-row cols-3">
+            <div class="field">
+              <label>Mês / Ano de Referência</label>
+              <input type="text" id="f-referencia" placeholder="Ex: FEV/2026" />
+            </div>
+            <div class="field">
+              <label>Elaborado por</label>
+              <input type="text" id="f-elaborado" placeholder="Azumi RH — Inteligência Estratégica" />
+            </div>
+            <div class="field">
+              <label>Segmento da Empresa</label>
+              <input type="text" id="f-segmento" placeholder="Ex: PME | B2B SaaS" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. SUMÁRIO -->
+      <div class="form-section" id="sec-sumario">
+        <div class="section-head">
+          <div class="section-head-num">2</div>
+          <div class="section-head-title">Sumário Executivo</div>
+        </div>
+        <div class="section-body">
+          <div class="tip-box">💡 Descreva o cenário geral identificado: assimetrias, riscos e urgências. Este é o primeiro texto que o cliente lê.</div>
+          <div class="field">
+            <label>Texto do Sumário</label>
+            <textarea id="f-sumario" rows="5" placeholder="Ex: O presente diagnóstico visa mensurar o nível de prontidão da estrutura de RH frente aos desafios de escala da organização. Identificou-se..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PILARES -->
+      <div class="form-section" id="sec-pilares">
+        <div class="section-head">
+          <div class="section-head-num">3</div>
+          <div class="section-head-title">Análise por Pilar Estratégico</div>
+        </div>
+        <div class="section-body">
+
+          <!-- PILAR 01 -->
+          <div class="pilar-card">
+            <div class="pilar-card-head">
+              <div class="pch-num">01</div>
+              <div class="pch-title">Pessoas &amp; Liderança</div>
+            </div>
+            <div class="pilar-card-body">
+              <div class="field" style="margin-bottom:12px;">
+                <label>Nível de Maturidade (1 a 5)</label>
+                <div class="level-row">
+                  <button type="button" class="level-btn" data-pilar="p1" data-val="1" onclick="setLevel(this)">1/5</button>
+                  <button type="button" class="level-btn" data-pilar="p1" data-val="2" onclick="setLevel(this)">2/5</button>
+                  <button type="button" class="level-btn" data-pilar="p1" data-val="3" onclick="setLevel(this)">3/5</button>
+                  <button type="button" class="level-btn" data-pilar="p1" data-val="4" onclick="setLevel(this)">4/5</button>
+                  <button type="button" class="level-btn" data-pilar="p1" data-val="5" onclick="setLevel(this)">5/5</button>
+                </div>
+                <input type="hidden" id="p1-level" value="" />
+              </div>
+              <div class="field-row cols-1" style="gap:12px;display:flex;flex-direction:column;">
+                <div class="field">
+                  <label>Classificação</label>
+                  <input type="text" id="p1-classif" placeholder="Ex: Estrutura Inicial" />
+                </div>
+                <div class="field">
+                  <label>Diagnóstico</label>
+                  <textarea id="p1-diag" rows="2" placeholder="Resumo do problema central identificado neste pilar."></textarea>
+                </div>
+                <div class="field">
+                  <label>Evidência Técnica</label>
+                  <textarea id="p1-evid" rows="3" placeholder="Detalhe os comportamentos e situações observados que fundamentam o diagnóstico."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PILAR 02 -->
+          <div class="pilar-card">
+            <div class="pilar-card-head">
+              <div class="pch-num">02</div>
+              <div class="pch-title">Processos &amp; Fluxos Operacionais</div>
+            </div>
+            <div class="pilar-card-body">
+              <div class="field" style="margin-bottom:12px;">
+                <label>Nível de Maturidade (1 a 5)</label>
+                <div class="level-row">
+                  <button type="button" class="level-btn" data-pilar="p2" data-val="1" onclick="setLevel(this)">1/5</button>
+                  <button type="button" class="level-btn" data-pilar="p2" data-val="2" onclick="setLevel(this)">2/5</button>
+                  <button type="button" class="level-btn" data-pilar="p2" data-val="3" onclick="setLevel(this)">3/5</button>
+                  <button type="button" class="level-btn" data-pilar="p2" data-val="4" onclick="setLevel(this)">4/5</button>
+                  <button type="button" class="level-btn" data-pilar="p2" data-val="5" onclick="setLevel(this)">5/5</button>
+                </div>
+                <input type="hidden" id="p2-level" value="" />
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div class="field">
+                  <label>Classificação</label>
+                  <input type="text" id="p2-classif" placeholder="Ex: Parcial e Não Padronizado" />
+                </div>
+                <div class="field">
+                  <label>Diagnóstico</label>
+                  <textarea id="p2-diag" rows="2" placeholder="Resumo do problema central."></textarea>
+                </div>
+                <div class="field">
+                  <label>Evidência Técnica</label>
+                  <textarea id="p2-evid" rows="3" placeholder="Detalhe os comportamentos observados."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PILAR 03 -->
+          <div class="pilar-card">
+            <div class="pilar-card-head">
+              <div class="pch-num">03</div>
+              <div class="pch-title">Performance &amp; Dados</div>
+            </div>
+            <div class="pilar-card-body">
+              <div class="field" style="margin-bottom:12px;">
+                <label>Nível de Maturidade (1 a 5)</label>
+                <div class="level-row">
+                  <button type="button" class="level-btn" data-pilar="p3" data-val="1" onclick="setLevel(this)">1/5</button>
+                  <button type="button" class="level-btn" data-pilar="p3" data-val="2" onclick="setLevel(this)">2/5</button>
+                  <button type="button" class="level-btn" data-pilar="p3" data-val="3" onclick="setLevel(this)">3/5</button>
+                  <button type="button" class="level-btn" data-pilar="p3" data-val="4" onclick="setLevel(this)">4/5</button>
+                  <button type="button" class="level-btn" data-pilar="p3" data-val="5" onclick="setLevel(this)">5/5</button>
+                </div>
+                <input type="hidden" id="p3-level" value="" />
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div class="field">
+                  <label>Classificação</label>
+                  <input type="text" id="p3-classif" placeholder="Ex: Ausência de Gestão por Evidências" />
+                </div>
+                <div class="field">
+                  <label>Diagnóstico</label>
+                  <textarea id="p3-diag" rows="2" placeholder="Resumo do problema central."></textarea>
+                </div>
+                <div class="field">
+                  <label>Evidência Técnica</label>
+                  <textarea id="p3-evid" rows="3" placeholder="Detalhe os comportamentos observados."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 4. PRIORIDADES -->
+      <div class="form-section" id="sec-prioridades">
+        <div class="section-head">
+          <div class="section-head-num">4</div>
+          <div class="section-head-title">Diretrizes de Intervenção — Top 3 Prioridades</div>
+        </div>
+        <div class="section-body">
+          <div class="priority-card">
+            <div class="priority-label">
+              <div class="priority-num">1</div>
+              <span>Prioridade 1</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="field">
+                <label>Título da Prioridade</label>
+                <input type="text" id="pri1-titulo" placeholder="Ex: GOVERNANÇA DE LIDERANÇA" />
+              </div>
+              <div class="field">
+                <label>Descrição da Ação</label>
+                <textarea id="pri1-desc" rows="2" placeholder="Descreva o que deve ser feito e o impacto esperado."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="priority-card">
+            <div class="priority-label">
+              <div class="priority-num">2</div>
+              <span>Prioridade 2</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="field">
+                <label>Título da Prioridade</label>
+                <input type="text" id="pri2-titulo" placeholder="Ex: PADRONIZAÇÃO OPERACIONAL" />
+              </div>
+              <div class="field">
+                <label>Descrição da Ação</label>
+                <textarea id="pri2-desc" rows="2" placeholder="Descreva o que deve ser feito e o impacto esperado."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="priority-card">
+            <div class="priority-label">
+              <div class="priority-num">3</div>
+              <span>Prioridade 3</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="field">
+                <label>Título da Prioridade</label>
+                <input type="text" id="pri3-titulo" placeholder="Ex: MONITORAMENTO ESTRATÉGICO" />
+              </div>
+              <div class="field">
+                <label>Descrição da Ação</label>
+                <textarea id="pri3-desc" rows="2" placeholder="Descreva o que deve ser feito e o impacto esperado."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. PARECER -->
+      <div class="form-section" id="sec-parecer">
+        <div class="section-head">
+          <div class="section-head-num">5</div>
+          <div class="section-head-title">Parecer Técnico e Recomendação</div>
+        </div>
+        <div class="section-body">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="field">
+              <label>Texto do Parecer</label>
+              <textarea id="f-parecer" rows="4" placeholder="Descreva a recomendação técnica com base no nível de exposição identificado. Ex: Considerando o nível de exposição identificado, a recomendação é..."></textarea>
+            </div>
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Modelo Recomendado</label>
+                <input type="text" id="f-modelo" placeholder="Ex: HR-as-a-Service — Pacote ONGOING" />
+              </div>
+              <div class="field">
+                <label>Trilha Indicada</label>
+                <input type="text" id="f-trilha" placeholder="Ex: Trilha de FORTALECIMENTO" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. OFERTA -->
+      <div class="form-section" id="sec-oferta">
+        <div class="section-head">
+          <div class="section-head-num">6</div>
+          <div class="section-head-title">Oferta Exclusiva</div>
+        </div>
+        <div class="section-body">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="field">
+              <label>Texto da Oferta</label>
+              <textarea id="f-oferta" rows="3" placeholder="Ex: Na contratação do Pacote ONGOING, a Azumi RH inclui, sem custo adicional, a entrega de 1 material (C1)* escolhido conforme o Raio-x."></textarea>
+            </div>
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Validade da Oferta</label>
+                <input type="text" id="f-validade" placeholder="Ex: 20 dias corridos" />
+              </div>
+              <div class="field">
+                <label>Observação / Rodapé</label>
+                <input type="text" id="f-obs" placeholder="Ex: *(C1) Complexidade baixa/média." />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERATE BOTTOM -->
+      <div class="generate-bar" style="margin-top:8px;">
+        <p><strong>Pronto?</strong> Clique para gerar o relatório formatado e imprimir em PDF.</p>
+        <button class="btn-generate" onclick="gerarRelatorio()">▶ Gerar Relatório</button>
+      </div>
+
+    </div><!-- /form area -->
+  </div><!-- /editor-wrap -->
+</div><!-- /editor-view -->
+
+
+<!-- ════════════════════════════════════════
+     PREVIEW VIEW
+════════════════════════════════════════ -->
+<div id="preview-view">
+
+  <div class="preview-topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn btn-back" onclick="voltarEditor()">← Voltar ao Editor</button>
+      <span class="preview-label">Pré-visualização do Relatório</span>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-print" onclick="window.print()">🖨 Imprimir / Salvar PDF</button>
+    </div>
+  </div>
+
+  <!-- A4 PAPER -->
+  <div class="paper">
+
+    <!-- REPORT HERO -->
+    <div class="r-hero">
+      <div class="r-logo">
+        <span class="rl-a">azumi</span><span class="rl-rh">RH</span>
+      </div>
+      <div class="r-doc-title">Relatório de Diagnóstico | Raio-X : Maturidade do Capital Humano</div>
+      <div class="r-meta-grid">
+        <div class="r-meta-item">
+          <div class="r-meta-label">Empresa</div>
+          <div class="r-meta-value" id="r-empresa">—</div>
+        </div>
+        <div class="r-meta-item">
+          <div class="r-meta-label">Elaborado por</div>
+          <div class="r-meta-value" id="r-elaborado">Azumi RH — Inteligência Estratégica</div>
+        </div>
+        <div class="r-meta-item">
+          <div class="r-meta-label">Referência</div>
+          <div class="r-meta-value" id="r-referencia">—</div>
+        </div>
+        <div class="r-meta-item" style="margin-top:6px;">
+          <div class="r-meta-label">Código do Documento</div>
+          <div class="r-meta-value" id="r-codigo">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT BODY -->
+    <div class="r-body">
+
+      <!-- 1. SUMÁRIO -->
+      <div class="r-section">
+        <div class="r-sec-title">1. Sumário Executivo</div>
+        <p class="r-summary-text" id="r-sumario">—</p>
+      </div>
+
+      <!-- 2. PILARES -->
+      <div class="r-section">
+        <div class="r-sec-title">2. Análise por Pilar Estratégico</div>
+
+        <!-- P1 -->
+        <div class="r-pilar">
+          <div class="r-pilar-head">
+            <div class="r-pilar-name" id="r-p1-name">I. PESSOAS &amp; LIDERANÇA</div>
+            <div class="r-pilar-level">
+              <div class="r-level-dots" id="r-p1-dots">
+                <div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div>
+              </div>
+              <span class="r-level-label" id="r-p1-classif-label">—</span>
+            </div>
+          </div>
+          <div class="r-pilar-body">
+            <div class="r-pilar-row">
+              <div class="r-pilar-row-label">Diagnóstico</div>
+              <div class="r-pilar-row-text" id="r-p1-diag">—</div>
+            </div>
+            <div class="r-pilar-row">
+              <div class="r-pilar-row-label">Evidência Técnica</div>
+              <div class="r-pilar-row-text" id="r-p1-evid">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- P2 -->
+        <div class="r-pilar">
+          <div class="r-pilar-head">
+            <div class="r-pilar-name">II. PROCESSOS &amp; FLUXOS OPERACIONAIS</div>
+            <div class="r-pilar-level">
+              <div class="r-level-dots" id="r-p2-dots">
+                <div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div>
+              </div>
+              <span class="r-level-label" id="r-p2-classif-label">—</span>
+            </div>
+          </div>
+          <div class="r-pilar-body">
+            <div class="r-pilar-row">
+              <div class="r-pilar-row-label">Diagnóstico</div>
+              <div class="r-pilar-row-text" id="r-p2-diag">—</div>
+            </div>
+            <div class="r-pilar-row">
+              <div class="r-pilar-row-label">Evidência Técnica</div>
+              <div class="r-pilar-row-text" id="r-p2-evid">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- P3 -->
+        <div class="r-pilar">
+          <div class="r-pilar-head">
+            <div class="r-pilar-name">III. PERFORMANCE &amp; DADOS</div>
+            <div class="r-pilar-level">
+              <div class="r-level-dots" id="r-p3-dots">
+                <div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div><div class="r-dot"></div>
+              </div>
+              <span class="r-level-label" id="r-p3-classif-label">—</span>
+            </div>
+          </div>
+          <div class="r-pilar-body">
+            <div class="r-pilar-row">
+              <div class="r-pilar-row-label">Diagnóstico</div>
+              <div class="r-pilar-row-text" id="r-p3-diag">—</div>
+            </div>
+            <div class="r-pilar-row">
+              <div class="r-pilar-row-label">Evidência Técnica</div>
+              <div class="r-pilar-row-text" id="r-p3-evid">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PRIORIDADES -->
+      <div class="r-section">
+        <div class="r-sec-title">3. Diretrizes de Intervenção — Top 3 Prioridades</div>
+        <div class="r-priorities">
+          <div class="r-priority">
+            <div class="r-priority-num">1</div>
+            <div class="r-priority-content">
+              <div class="r-priority-name" id="r-pri1-titulo">—</div>
+              <div class="r-priority-text" id="r-pri1-desc">—</div>
+            </div>
+          </div>
+          <div class="r-priority">
+            <div class="r-priority-num">2</div>
+            <div class="r-priority-content">
+              <div class="r-priority-name" id="r-pri2-titulo">—</div>
+              <div class="r-priority-text" id="r-pri2-desc">—</div>
+            </div>
+          </div>
+          <div class="r-priority">
+            <div class="r-priority-num">3</div>
+            <div class="r-priority-content">
+              <div class="r-priority-name" id="r-pri3-titulo">—</div>
+              <div class="r-priority-text" id="r-pri3-desc">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. PARECER -->
+      <div class="r-section">
+        <div class="r-sec-title">4. Parecer Técnico e Recomendação</div>
+        <div class="r-parecer-box">
+          <p id="r-parecer">—</p>
+        </div>
+        <div class="r-model-row">
+          <div class="r-model-badge">
+            <div class="r-model-badge-label">Modelo Recomendado (Azumi RH)</div>
+            <div class="r-model-badge-val" id="r-modelo">—</div>
+          </div>
+          <div class="r-model-badge">
+            <div class="r-model-badge-label">Trilha Indicada</div>
+            <div class="r-model-badge-val" id="r-trilha">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. OFERTA -->
+      <div class="r-section">
+        <div class="r-oferta">
+          <div class="r-oferta-title">⭐ Oferta Exclusiva</div>
+          <p id="r-oferta-texto">—</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <span class="r-oferta-badge" id="r-validade-badge">Válido por —</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.5);font-style:italic;" id="r-obs-texto"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVISO LEGAL -->
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);">
+        <p style="font-size:10px;color:var(--gray-500);line-height:1.7;font-style:italic;">
+          AVISO LEGAL: Este documento contém informações estratégicas e confidenciais fundamentadas na metodologia proprietária da Azumi RH. A eficácia das sugestões depende da implementação rigorosa e do acompanhamento contínuo dos rituais propostos.
+        </p>
+      </div>
+
+    </div><!-- /r-body -->
+
+    <!-- REPORT FOOTER -->
+    <div class="r-footer">
+      <div class="rf-logo">
+        <span class="rfl-a">azumi</span><span class="rfl-rh">RH</span>
+      </div>
+      <div class="rf-contact">
+        <div>(41) 98835-0743 · contato@azumirh.com.br · azumirh.com.br</div>
+        <div class="rf-tagline">Cuidar de pessoas é estratégico.</div>
+      </div>
+    </div>
+
+  </div><!-- /paper -->
+</div><!-- /preview-view -->
+
+
+<script>
+  /* ── LEVEL SELECTOR ── */
+  function setLevel(btn) {
+    const pilar = btn.dataset.pilar;
+    document.querySelectorAll(`.level-btn[data-pilar="${pilar}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById(`${pilar}-level`).value = btn.dataset.val;
+  }
+
+  /* ── SCROLL TO SECTION ── */
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.snav-item').forEach(i => i.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+
+  /* ── FILL DOTS ── */
+  function fillDots(containerId, level) {
+    const container = document.getElementById(containerId);
+    const dots = container.querySelectorAll('.r-dot');
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i < parseInt(level || 0));
+    });
+  }
+
+  /* ── GET VALUE ── */
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function set(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || '—';
+  }
+
+  /* ── GERAR RELATÓRIO ── */
+  function gerarRelatorio() {
+    // Meta
+    set('r-empresa',    val('f-empresa') || 'Nome da Empresa');
+    set('r-elaborado',  val('f-elaborado') || 'Azumi RH — Inteligência Estratégica');
+    set('r-referencia', val('f-referencia') || '—');
+    set('r-codigo',     val('f-codigo') || '—');
+
+    // Sumário
+    set('r-sumario', val('f-sumario'));
+
+    // Pilares
+    const p1lv = val('p1-level');
+    const p2lv = val('p2-level');
+    const p3lv = val('p3-level');
+
+    fillDots('r-p1-dots', p1lv);
+    fillDots('r-p2-dots', p2lv);
+    fillDots('r-p3-dots', p3lv);
+
+    const classifLabel = (lv, cl) => {
+      const lvText = lv ? `Nível ${lv}/5` : '';
+      return cl ? `${lvText}${lv ? ' — ' : ''}${cl}` : (lvText || '—');
+    };
+
+    set('r-p1-classif-label', classifLabel(p1lv, val('p1-classif')));
+    set('r-p2-classif-label', classifLabel(p2lv, val('p2-classif')));
+    set('r-p3-classif-label', classifLabel(p3lv, val('p3-classif')));
+
+    set('r-p1-diag', val('p1-diag'));
+    set('r-p1-evid', val('p1-evid'));
+    set('r-p2-diag', val('p2-diag'));
+    set('r-p2-evid', val('p2-evid'));
+    set('r-p3-diag', val('p3-diag'));
+    set('r-p3-evid', val('p3-evid'));
+
+    // Prioridades
+    set('r-pri1-titulo', val('pri1-titulo'));
+    set('r-pri1-desc',   val('pri1-desc'));
+    set('r-pri2-titulo', val('pri2-titulo'));
+    set('r-pri2-desc',   val('pri2-desc'));
+    set('r-pri3-titulo', val('pri3-titulo'));
+    set('r-pri3-desc',   val('pri3-desc'));
+
+    // Parecer
+    set('r-parecer', val('f-parecer'));
+    set('r-modelo',  val('f-modelo') || 'HR-as-a-Service — Pacote ONGOING');
+    set('r-trilha',  val('f-trilha') || 'Trilha de FORTALECIMENTO');
+
+    // Oferta
+    set('r-oferta-texto', val('f-oferta'));
+    const validade = val('f-validade');
+    set('r-validade-badge', validade ? `Válido por ${validade}` : 'Válido por 20 dias corridos');
+    set('r-obs-texto', val('f-obs'));
+
+    // Mostrar preview
+    document.getElementById('editor-view').style.display = 'none';
+    document.getElementById('preview-view').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── VOLTAR EDITOR ── */
+  function voltarEditor() {
+    document.getElementById('preview-view').style.display = 'none';
+    document.getElementById('editor-view').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── LIMPAR ── */
+  function limparForm() {
+    if (!confirm('Tem certeza que deseja limpar todos os campos?')) return;
+    document.querySelectorAll('input[type="text"], input[type="email"], textarea').forEach(el => el.value = '');
+    document.querySelectorAll('input[type="hidden"]').forEach(el => el.value = '');
+    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('selected'));
+  }
+</script>
+
+</body>
+</html>
