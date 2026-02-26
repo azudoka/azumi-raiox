@@ -501,14 +501,29 @@
       .deadline-box { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
     
-    /* ── CORREÇÕES DE CONTRASTE (Textos Brancos no Fundo Escuro) ── */
+    /* ── CORREÇÕES DE CONTRASTE E BOTÃO DE ENVIAR ── */
     .pilar-num, 
-    .submit-section p, 
-    .submit-wrapper p,
     .footer p,
     .footer a,
-    .footer span {
+    .footer span,
+    .submit-wrap,
+    .submit-wrap p,
+    .submit-wrap span,
+    .submit-wrap h3,
+    .submit-wrap strong,
+    .deadline-box,
+    .deadline-box p,
+    .deadline-box span,
+    .deadline-box strong {
       color: #FFFFFF !important;
+    }
+
+    button[type="submit"] {
+      color: #FFFFFF !important; /* Letra branca no fundo azul */
+    }
+
+    button[type="submit"]:hover {
+      color: #034C8B !important; /* Letra azul quando o botão fica branco no hover */
     }
     
   </style>
