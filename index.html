@@ -500,6 +500,17 @@
       .submit-wrap { flex-direction: column; align-items: stretch; text-align: center; }
       .deadline-box { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
+    
+    /* ── CORREÇÕES DE CONTRASTE (Textos Brancos no Fundo Escuro) ── */
+    .pilar-num, 
+    .submit-section p, 
+    .submit-wrapper p,
+    .footer p,
+    .footer a,
+    .footer span {
+      color: #FFFFFF !important;
+    }
+    
   </style>
 </head>
 <body>
@@ -700,11 +711,13 @@
 
   <!-- ── FOOTER ── -->
   <div class="footer">
-    <div class="footer-logo">
-      <span class="fl-a">azumi</span><span class="fl-rh">RH</span>
+    <div style="margin-bottom: 16px;">
+      <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
     </div>
-    <p>(41) 98835-0743 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="20434f4e5441544f60415a554d4952480e434f4d0e4252">[email&#160;protected
-      </p>
+    
+    <p style="margin: 0; font-size: 14px; color: #FFFFFF;">
+      (41) 98835-0743 &middot; <a href="mailto:contato@azumirh.com.br" style="color: #FFFFFF; text-decoration: none;">contato@azumirh.com.br</a>
+    </p>
   </div> </form> <script>
   var form = document.getElementById("meuFormulario");
   
