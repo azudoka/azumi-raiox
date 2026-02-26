@@ -3,117 +3,165 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Obrigada! | azumiRH</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <title>Obrigada! | Azumi RH</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --navy: #034C8B; /* Azul Principal Azumi */
+      --blue: #017CCB; /* Azul Secundário */
+      --off-white: #FAFAFA;
+      --text: #222222;
+      --border: #EDEDED;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f0f4f9;
-      color: #0d1f35;
+      background-color: var(--off-white);
+      color: var(--text);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* HEADER */
     header {
-      background: #0b1929;
-      padding: 32px 48px 56px;
-      border-bottom: 3px solid #3b82f6;
+      background: var(--navy);
+      padding: 24px 48px;
+      border-bottom: 4px solid var(--blue);
+      text-align: center; /* Centraliza a logo */
     }
 
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.3px;
+    /* ── LOGO AZUMI RH PADRÃO ── */
+    .logo-azumi {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 32px;
+      color: #FFFFFF; /* Toda branca no fundo azul */
+      text-transform: lowercase;
     }
-
-    .logo span {
-      color: #3b82f6;
+    .logo-rh {
+      font-family: 'Avenir', 'Nunito', sans-serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 32px;
+      color: #FFFFFF; /* Toda branca */
+      text-transform: uppercase;
+      margin-left: 2px;
     }
 
     /* CONTENT */
     .content {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
     }
 
-    /* CARD */
+    /* CARD ALINHADO E ELEGANTE */
     .card {
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #dde6f0;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      background: #FFFFFF;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(3, 76, 139, 0.08); /* Sombra com o tom da marca */
+      max-width: 600px;
+      width: 100%;
+      text-align: center; /* Tira o aspecto "torto" */
+      overflow: hidden;
     }
 
     .card-body {
-      padding: 48px 52px;
+      padding: 56px 48px;
     }
 
+    /* EMOJI COM ANIMAÇÃO */
     .emoji {
-      font-size: 40px;
-      margin-bottom: 16px;
-      display: block;
+      font-size: 56px;
+      margin-bottom: 24px;
+      display: inline-block;
+      animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .card h1 {
-      font-size: 28px;
-      font-weight: 800;
-      color: #0d1f35;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--navy);
       margin-bottom: 24px;
       line-height: 1.2;
+      letter-spacing: -0.5px;
     }
 
     /* INFO BOX */
     .info-box {
-      border-left: 4px solid #3b82f6;
-      background: #f0f4f9;
-      border-radius: 0 8px 8px 0;
-      padding: 20px 24px;
+      border-top: 4px solid var(--blue);
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--navy);
+      border-radius: 8px;
+      padding: 24px;
       margin-bottom: 32px;
+      text-align: left; /* Mantém a leitura do texto confortável */
     }
 
     .info-box p {
-      font-size: 14.5px;
-      color: #2a3f5a;
+      font-size: 15px;
+      color: var(--text);
       line-height: 1.8;
     }
 
     .info-box strong {
-      font-weight: 700;
-      color: #0d1f35;
+      font-weight: 600;
+      color: var(--navy);
     }
 
     .support {
       font-size: 14.5px;
-      color: #5a6f88;
+      color: #666666;
       line-height: 1.7;
-      margin-bottom: 20px;
+      margin-bottom: 32px;
     }
 
+    /* BOTÃO DE ACESSO AO SITE */
     .site-link {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #3b82f6;
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #FFFFFF;
+      background-color: var(--navy);
+      padding: 14px 36px;
+      border-radius: 50px;
       text-decoration: none;
+      transition: all 0.3s ease;
     }
 
     .site-link:hover {
-      text-decoration: underline;
+      background-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(1, 124, 203, 0.3);
     }
 
     @media (max-width: 540px) {
-      header { padding: 24px 24px 40px; }
-      .card-body { padding: 32px 24px; }
+      header { padding: 20px; }
+      .card-body { padding: 40px 24px; }
+      .card h1 { font-size: 26px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">azumi<span>RH</span></div>
+    <div>
+      <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+    </div>
   </header>
 
   <div class="content">
@@ -136,7 +184,7 @@
           Se tiver alguma dúvida ou precisar de suporte, conte conosco!
         </p>
 
-        <a class="site-link" href="https://azumirh.com.br" target="_blank">azumirh.com.br</a>
+        <a class="site-link" href="https://azumirh.com.br" target="_blank">Acessar nosso site</a>
 
       </div>
     </div>
