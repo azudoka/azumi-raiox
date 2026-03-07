@@ -1,194 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Obrigada! | Azumi RH</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --navy: #034C8B; /* Azul Principal Azumi */
-      --blue: #017CCB; /* Azul Secundário */
-      --off-white: #FAFAFA;
-      --text: #222222;
-      --border: #EDEDED;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Obrigada! | Azumi RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ocean:#031D38;--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--ice:#93C5FD;
+  --offwhite:#F4F7FC;--text:#222222;--border:#EDEDED;
+  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
+  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--offwhite);color:var(--text);
+  min-height:100vh;display:flex;flex-direction:column;
+}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── LOGO FUNDO ESCURO ── */
+.logo-dark .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;letter-spacing:-.01em}
+.logo-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--off-white);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+/* ── HEADER ── */
+header{
+  background:var(--gh);padding:0 48px;height:72px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 24px rgba(3,29,56,.25);
+}
+header::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 40% 150% at 80% 50%,rgba(139,92,246,.2),transparent 60%);
+}
+.header-logo{
+  position:relative;display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+}
+.header-logo svg{width:28px;height:22px}
+.header-logo .logo-azumi{font-size:24px}
+.header-logo .logo-rh{font-size:24px}
 
-    /* HEADER */
-    header {
-      background: var(--navy);
-      padding: 24px 48px;
-      border-bottom: 4px solid var(--blue);
-      text-align: center; /* Centraliza a logo */
-    }
+/* ── CONTENT ── */
+.content{
+  flex:1;display:flex;align-items:center;
+  justify-content:center;padding:52px 24px;
+}
 
-    /* ── LOGO AZUMI RH PADRÃO ── */
-    .logo-azumi {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 32px;
-      color: #FFFFFF; /* Toda branca no fundo azul */
-      text-transform: lowercase;
-    }
-    .logo-rh {
-      font-family: 'Avenir', 'Nunito', sans-serif;
-      font-weight: 300;
-      font-style: italic;
-      font-size: 32px;
-      color: #FFFFFF; /* Toda branca */
-      text-transform: uppercase;
-      margin-left: 2px;
-    }
+/* ── CARD ── */
+.card{
+  background:#fff;border-radius:20px;
+  border:1.5px solid var(--border);
+  box-shadow:0 12px 40px rgba(3,29,56,.08);
+  max-width:580px;width:100%;
+  text-align:center;overflow:hidden;
+}
 
-    /* CONTENT */
-    .content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 24px;
-    }
+.card-top-bar{
+  height:4px;
+  background:var(--gm);
+}
 
-    /* CARD ALINHADO E ELEGANTE */
-    .card {
-      background: #FFFFFF;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 30px rgba(3, 76, 139, 0.08); /* Sombra com o tom da marca */
-      max-width: 600px;
-      width: 100%;
-      text-align: center; /* Tira o aspecto "torto" */
-      overflow: hidden;
-    }
+.card-body{padding:52px 48px 48px}
 
-    .card-body {
-      padding: 56px 48px;
-    }
+/* ── EMOJI ── */
+.emoji{
+  font-size:56px;margin-bottom:22px;
+  display:inline-block;
+  animation:pop .6s cubic-bezier(.175,.885,.32,1.275) forwards;
+}
+@keyframes pop{
+  0%{transform:scale(0);opacity:0}
+  100%{transform:scale(1);opacity:1}
+}
 
-    /* EMOJI COM ANIMAÇÃO */
-    .emoji {
-      font-size: 56px;
-      margin-bottom: 24px;
-      display: inline-block;
-      animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
+/* ── TÍTULO ── */
+.card h1{
+  font-family:'Sora',sans-serif;font-weight:800;
+  font-size:30px;color:var(--ocean);
+  margin-bottom:24px;line-height:1.2;letter-spacing:-.3px;
+}
 
-    @keyframes pop {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+/* ── INFO BOX ── */
+.info-box{
+  background:var(--offwhite);border:1.5px solid var(--border);
+  border-top:3px solid var(--blue2);
+  border-radius:12px;padding:22px 24px;
+  margin-bottom:28px;text-align:left;
+}
+.info-box p{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14.5px;color:var(--text);line-height:1.8;
+}
+.info-box strong{font-weight:700;color:var(--blue)}
 
-    .card h1 {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 24px;
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-    }
+/* ── SUPPORT ── */
+.support{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:13.5px;color:#778082;
+  line-height:1.7;margin-bottom:32px;
+}
 
-    /* INFO BOX */
-    .info-box {
-      border-top: 4px solid var(--blue);
-      background: var(--off-white);
-      border: 1px solid var(--border);
-      border-top: 4px solid var(--navy);
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 32px;
-      text-align: left; /* Mantém a leitura do texto confortável */
-    }
+/* ── BADGE PRAZO ── */
+.badge-prazo{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--offwhite);border:1.5px solid var(--border);
+  border-radius:100px;padding:6px 16px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  color:var(--blue);letter-spacing:.05em;margin-bottom:28px;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--blue2);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-    .info-box p {
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.8;
-    }
+/* ── BOTÃO ── */
+.site-link{
+  display:inline-block;
+  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
+  color:#fff;background:var(--gm);
+  padding:14px 38px;border-radius:100px;text-decoration:none;
+  box-shadow:0 4px 16px rgba(59,130,246,.25);
+  transition:all .25s ease;
+}
+.site-link:hover{
+  transform:translateY(-2px);
+  box-shadow:0 7px 24px rgba(59,130,246,.35);
+  filter:brightness(1.05);
+}
 
-    .info-box strong {
-      font-weight: 600;
-      color: var(--navy);
-    }
+/* ── FOOTER ── */
+footer{
+  background:var(--gh);padding:16px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#034C8B,#3B82F6,#8B5CF6,#3B82F6,#034C8B)}
+.footer-logo{display:inline-flex;align-items:center;gap:7px}
+.footer-logo svg{width:20px;height:16px}
+.footer-logo .logo-azumi{font-size:16px}
+.footer-logo .logo-rh{font-size:16px}
+.footer-tagline{
+  font-family:'Space Grotesk',sans-serif;font-size:11px;
+  font-style:italic;color:rgba(147,197,253,.6);
+}
 
-    .support {
-      font-size: 14.5px;
-      color: #666666;
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
-
-    /* BOTÃO DE ACESSO AO SITE */
-    .site-link {
-      display: inline-block;
-      font-size: 15px;
-      font-weight: 600;
-      color: #FFFFFF;
-      background-color: var(--navy);
-      padding: 14px 36px;
-      border-radius: 50px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .site-link:hover {
-      background-color: var(--blue);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(1, 124, 203, 0.3);
-    }
-
-    @media (max-width: 540px) {
-      header { padding: 20px; }
-      .card-body { padding: 40px 24px; }
-      .card h1 { font-size: 26px; }
-    }
-  </style>
+@media(max-width:540px){
+  header{padding:0 20px}
+  .card-body{padding:36px 22px}
+  .card h1{font-size:24px}
+  footer{flex-direction:column;gap:8px;text-align:center;padding:16px 20px}
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <div>
-      <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
-    </div>
-  </header>
+<header>
+  <a href="https://azumirh.com.br" class="header-logo logo-dark">
+    <svg viewBox="0 0 120 96" fill="none">
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+      </linearGradient></defs>
+      <circle cx="44" cy="48" r="34" fill="url(#hg)" opacity=".9"/>
+      <circle cx="76" cy="48" r="34" fill="url(#hg)" opacity=".7"/>
+    </svg>
+    <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+  </a>
+</header>
 
-  <div class="content">
-    <div class="card">
-      <div class="card-body">
+<div class="content">
+  <div class="card">
+    <div class="card-top-bar"></div>
+    <div class="card-body">
 
-        <span class="emoji">🎉</span>
+      <span class="emoji">🎉</span>
 
-        <h1>Uhull! Obrigada!</h1>
+      <h1>Uhull! Obrigada!</h1>
 
-        <div class="info-box">
-          <p>
-            Nossa equipe analisará suas respostas e entregará o seu
-            <strong>Raio-X Exclusivo</strong> em até <strong>36 horas úteis</strong>.
-            Todas as informações são tratadas com total <strong>confidencialidade</strong>.
-          </p>
-        </div>
-
-        <p class="support">
-          Se tiver alguma dúvida ou precisar de suporte, conte conosco!
-        </p>
-
-        <a class="site-link" href="https://azumirh.com.br" target="_blank">Acessar nosso site</a>
-
+      <div class="badge-prazo">
+        <span class="badge-dot"></span>
+        Entrega em até 36 horas úteis
       </div>
+
+      <div class="info-box">
+        <p>
+          Nossa equipe analisará suas respostas e entregará o seu
+          <strong>Raio-X Exclusivo</strong> em até <strong>36 horas úteis</strong>.
+          Todas as informações são tratadas com total <strong>confidencialidade</strong>.
+        </p>
+      </div>
+
+      <p class="support">
+        Se tiver alguma dúvida ou precisar de suporte, conte conosco!
+      </p>
+
+      <a class="site-link" href="https://azumirh.com.br" target="_blank">Acessar nosso site</a>
+
     </div>
   </div>
+</div>
+
+<footer>
+  <div class="footer-logo logo-dark">
+    <svg viewBox="0 0 120 96" fill="none">
+      <defs><linearGradient id="fg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+      </linearGradient></defs>
+      <circle cx="44" cy="48" r="34" fill="url(#fg)" opacity=".9"/>
+      <circle cx="76" cy="48" r="34" fill="url(#fg)" opacity=".7"/>
+    </svg>
+    <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+  </div>
+  <span class="footer-tagline">Cuidar de pessoas é estratégico.</span>
+</footer>
 
 </body>
 </html>
