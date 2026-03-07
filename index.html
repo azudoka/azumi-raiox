@@ -1,532 +1,318 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raio-X de Maturidade | Azumi RH</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --navy: #034C8B; /* Seu azul principal atualizado */
-      --blue: #017CCB; /* Seu azul secundário */
-      --off-white: #FAFAFA; /* Seu fundo claro */
-      --text: #222222; /* Seu texto escuro */
-      --border: #EDEDED; /* Sua cor de borda */
-      --accent: #017CCB;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Raio-X de Maturidade | Azumi RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════
+   TOKENS v2.3
+══════════════════════════════════════════ */
+:root{
+  --ocean:#031D38;--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--ice:#93C5FD;
+  --offwhite:#F4F7FC;--white:#FFFFFF;--text:#222222;--border:#EDEDED;
+  --gray-100:#EEF2F8;--gray-200:#DDE5F0;--gray-300:#C5D0E0;--gray-500:#778082;--gray-700:#4A5A72;
+  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
+  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Space Grotesk',sans-serif;background:var(--offwhite);color:var(--text);min-height:100vh}
+input,select,textarea,button{font-family:'Space Grotesk',sans-serif}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ══════════════════════════════════════════
+   LOGO — CONTEXTO POR FUNDO
+══════════════════════════════════════════ */
+.logo-dark .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;letter-spacing:-.01em}
+.logo-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
+.logo-light .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:var(--blue);letter-spacing:-.01em}
+.logo-light .logo-rh{
+  font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;
+  background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-left:1px;
+}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--off-white);
-      color: var(--text);
-      min-height: 100vh;
-    }
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  background:var(--gh);position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-60px;
+  width:480px;height:480px;
+  background:radial-gradient(circle,rgba(139,92,246,.2) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#034C8B,#3B82F6,#8B5CF6,#3B82F6,#034C8B);
+}
+.hero-inner{
+  max-width:860px;margin:0 auto;padding:52px 40px 50px;
+  position:relative;z-index:1;
+}
+.hero-logo{
+  display:inline-flex;align-items:center;gap:9px;
+  text-decoration:none;margin-bottom:28px;
+}
+.hero-logo svg{width:30px;height:24px}
+.hero-logo .logo-azumi{font-size:26px}
+.hero-logo .logo-rh{font-size:26px}
 
-    /* ── HERO ── */
-    .hero {
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
-    }
+.hero-tag{
+  display:inline-block;
+  background:rgba(147,197,253,.12);border:1px solid rgba(147,197,253,.25);
+  color:var(--ice);
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:2.5px;text-transform:uppercase;
+  padding:5px 14px;border-radius:100px;margin-bottom:16px;
+}
+.hero h1{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:34px;
+  color:#fff;line-height:1.15;letter-spacing:-.3px;margin-bottom:14px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:300;
+  color:rgba(255,255,255,.65);line-height:1.8;max-width:560px;
+}
+.hero-sub strong{font-weight:600;color:rgba(255,255,255,.9)}
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -60px;
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(46,125,209,0.22) 0%, transparent 70%);
-      pointer-events: none;
-    }
+/* ══════════════════════════════════════════
+   CLIENT BAR
+══════════════════════════════════════════ */
+.client-bar{
+  background:var(--white);border-bottom:1.5px solid var(--border);
+  box-shadow:0 2px 16px rgba(3,29,56,.06);
+}
+.client-bar-inner{
+  max-width:860px;margin:0 auto;padding:26px 40px;
+  display:flex;gap:16px;flex-wrap:wrap;
+}
+.field-group{display:flex;flex-direction:column;gap:5px;flex:1;min-width:180px}
+.field-group label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-500);
+}
+.field-group input,
+.field-group textarea{
+  border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;
+  font-size:13px;color:var(--text);background:var(--offwhite);
+  outline:none;transition:border-color .2s,box-shadow .2s;width:100%;
+}
+.field-group input:focus,
+.field-group textarea:focus{
+  border-color:var(--blue2);box-shadow:0 0 0 3px rgba(59,130,246,.1);background:var(--white);
+}
+.field-group input::placeholder,
+.field-group textarea::placeholder{color:var(--gray-300);font-size:12.5px}
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--accent) 0%, #4EAEFF 50%, var(--accent) 100%);
-    }
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+.main{max-width:860px;margin:0 auto;padding:40px 40px 60px}
 
-    .hero-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 52px 40px 48px;
-      position: relative;
-      z-index: 1;
-    }
+/* INTRO CARD */
+.intro-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-left:4px solid var(--blue2);border-radius:12px;
+  padding:20px 24px;margin-bottom:36px;
+}
+.intro-card p{
+  font-family:'Space Grotesk',sans-serif;font-size:13.5px;
+  font-weight:300;line-height:1.8;color:var(--gray-700);
+}
+.intro-card strong{font-weight:700;color:var(--blue)}
 
-    /* ── LOGO ── */
-    .logo {
-      display: inline-flex;
-      align-items: baseline;
-      margin-bottom: 32px;
-      line-height: 1;
-    }
+/* PILAR */
+.pilar{margin-bottom:32px}
+.pilar-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:20px;padding-bottom:14px;
+  border-bottom:1.5px solid var(--border);
+}
+.pilar-num{
+  width:46px;height:46px;background:var(--gm);color:#fff;
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-weight:800;font-size:14px;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(59,130,246,.25);
+}
+.pilar-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:3px;
+}
+.pilar-title{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:17px;color:var(--ocean);
+}
 
-    /* ── LOGO AZUMI RH PADRÃO ── */
-    .logo-azumi {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600; /* Semi-bold */
-      font-size: 28px;
-      color: #FFFFFF; /* Toda branca */
-      text-transform: lowercase;
-    }
-    .logo-rh {
-      font-family: 'Avenir', 'Nunito', sans-serif; /* Avenir com fallback elegante */
-      font-weight: 300; /* Leve / Light */
-      font-style: italic;
-      font-size: 28px;
-      color: #FFFFFF; /* Toda branca */
-      text-transform: uppercase;
-      margin-left: 1px; /* Um micro respiro entre as palavras */
-    }
+/* QUESTION CARD */
+.q-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:12px;padding:20px 22px;margin-bottom:12px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.q-card:focus-within{
+  border-color:var(--blue2);box-shadow:0 0 0 3px rgba(59,130,246,.07);
+}
+.q-label{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.q-num{
+  width:28px;height:28px;
+  background:var(--gm);color:#fff;
+  border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-weight:800;font-size:11px;
+  flex-shrink:0;margin-top:2px;
+}
+.q-text{
+  font-family:'Space Grotesk',sans-serif;font-size:13.5px;
+  font-weight:500;color:var(--text);line-height:1.6;
+}
+.q-text em{
+  font-style:normal;font-weight:400;color:var(--gray-500);font-size:12.5px;
+}
+.q-card textarea{
+  width:100%;border:1.5px solid var(--gray-100);border-radius:8px;
+  padding:11px 14px;font-size:13px;font-weight:300;color:var(--text);
+  background:var(--offwhite);resize:vertical;min-height:88px;outline:none;
+  transition:border-color .2s,box-shadow .2s;line-height:1.7;
+}
+.q-card textarea:focus{
+  border-color:var(--blue2);box-shadow:0 0 0 3px rgba(59,130,246,.1);background:var(--white);
+}
+.q-card textarea::placeholder{color:var(--gray-300);font-style:italic;font-size:12.5px}
 
-    .hero-tag {
-      display: inline-block;
-      background: rgba(46,125,209,0.18);
-      border: 1px solid rgba(46,125,209,0.38);
-      color: #7EC8F8;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 100px;
-      margin-bottom: 16px;
-    }
+/* EXTRA SECTION */
+.extra-section{
+  background:var(--gray-100);border:1.5px solid var(--border);
+  border-radius:14px;padding:24px 26px;margin-bottom:32px;
+}
+.extra-section h3{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:14px;
+  color:var(--ocean);margin-bottom:4px;
+}
+.extra-section .sub{
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:300;
+  color:var(--gray-500);margin-bottom:18px;
+}
+.extra-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;
+}
 
-    .hero h1 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 800;
-      font-size: 34px;
-      color: var(--white);
-      line-height: 1.15;
-      letter-spacing: -0.3px;
-      margin-bottom: 12px;
-    }
+/* DEADLINE BOX */
+.deadline-box{
+  background:var(--gh);border-radius:12px;padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  position:relative;overflow:hidden;
+}
+.deadline-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 120% at 110% 50%,rgba(139,92,246,.2),transparent 60%);
+}
+.dl-label{
+  position:relative;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  color:rgba(147,197,253,.75);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;
+}
+.dl-val{
+  position:relative;font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:14px;color:#fff;
+}
+.dl-badge{
+  position:relative;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  padding:6px 16px;border-radius:100px;white-space:nowrap;flex-shrink:0;letter-spacing:.04em;
+}
 
-    .hero h1 span { color: var(--accent); }
+/* SUBMIT */
+.submit-wrap{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding-top:28px;
+}
+.submit-note{
+  font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:300;
+  color:var(--gray-500);line-height:1.6;max-width:380px;
+}
+.submit-note strong{font-weight:700;color:var(--blue)}
+.btn-submit{
+  background:var(--gm);color:#fff;border:none;border-radius:100px;
+  padding:15px 40px;font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:14px;letter-spacing:.2px;cursor:pointer;
+  transition:all .2s;box-shadow:0 4px 18px rgba(59,130,246,.3);white-space:nowrap;
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(59,130,246,.4);filter:brightness(1.05)}
+.btn-submit:active{transform:translateY(0)}
 
-    .hero-sub {
-      font-size: 14px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.62);
-      line-height: 1.7;
-      max-width: 520px;
-    }
+/* FOOTER */
+.footer{
+  background:var(--gh);padding:24px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.footer::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#034C8B,#3B82F6,#8B5CF6,#3B82F6,#034C8B);
+}
+.footer::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 40% 150% at 80% 50%,rgba(139,92,246,.15),transparent 60%);
+}
+.footer-logo{position:relative;display:inline-flex;align-items:center;gap:7px}
+.footer-logo svg{width:20px;height:16px}
+.footer-logo .logo-azumi{font-size:17px}
+.footer-logo .logo-rh{font-size:17px}
+.footer-right{
+  position:relative;text-align:right;
+}
+.footer-contact{
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:300;
+  color:rgba(255,255,255,.7);line-height:1.6;
+}
+.footer-contact a{color:rgba(255,255,255,.7);text-decoration:none}
+.footer-contact a:hover{color:#fff}
+.footer-tagline{
+  font-family:'Space Grotesk',sans-serif;font-size:10px;
+  font-style:italic;color:rgba(147,197,253,.5);margin-top:3px;
+}
 
-    /* ── CLIENT BAR ── */
-    .client-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 2px 16px rgba(13,34,64,0.07);
-    }
+/* ══════════════════════════════════════════
+   PRINT
+══════════════════════════════════════════ */
+@media print{
+  body{background:#fff!important}
+  .hero,.footer,.deadline-box,.pilar-num,.q-num{
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .btn-submit,.submit-wrap{display:none!important}
+  .main{padding:20px 40px 40px}
+  .q-card{break-inside:avoid;page-break-inside:avoid}
+  .pilar{break-inside:avoid}
+  .q-card textarea{
+    border:1.5px solid #CBD8EE!important;min-height:60px;
+    background:#F4F7FC!important;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{margin:.6cm;size:A4}
+}
 
-    .client-bar-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 28px 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .field-group label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      color: var(--gray-500);
-    }
-
-    .field-group input,
-    .field-group textarea {
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--text);
-      background: var(--off-white);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-      width: 100%;
-    }
-
-    .field-group input:focus,
-    .field-group textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(46,125,209,0.12);
-      background: var(--white);
-    }
-
-    .field-group input::placeholder,
-    .field-group textarea::placeholder { color: var(--gray-300); }
-
-    /* ── MAIN ── */
-    .main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 40px 40px 60px;
-    }
-
-    /* INTRO CARD */
-    .intro-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: 12px;
-      padding: 22px 26px;
-      margin-bottom: 36px;
-    }
-
-    .intro-card p {
-      font-size: 13.5px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--gray-700);
-    }
-
-    .intro-card strong { font-weight: 600; color: var(--navy); }
-
-    /* PILAR SECTION */
-    .pilar { margin-bottom: 32px; }
-
-    .pilar-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
-      border-bottom: 1.5px solid var(--border);
-    }
-
-    .pilar-num {
-      width: 46px; height: 46px;
-      background: var(--navy);
-      color: var(--white);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .pilar-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 2px;
-    }
-
-    .pilar-title {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 17px;
-      color: var(--navy);
-    }
-
-    /* QUESTION CARD */
-    .q-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 22px;
-      margin-bottom: 12px;
-      transition: border-color 0.2s;
-    }
-
-    .q-card:focus-within { border-color: var(--accent); }
-
-    .q-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .q-num {
-      width: 26px; height: 26px;
-      background: var(--accent-light);
-      color: var(--accent);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .q-text {
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    .q-text em {
-      font-style: normal;
-      font-weight: 400;
-      color: var(--gray-500);
-      font-size: 12.5px;
-    }
-
-    .q-card textarea {
-      width: 100%;
-      border: 1.5px solid var(--gray-100);
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--text);
-      background: var(--off-white);
-      resize: vertical;
-      min-height: 88px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      line-height: 1.7;
-    }
-
-    .q-card textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(46,125,209,0.10);
-      background: var(--white);
-    }
-
-    .q-card textarea::placeholder {
-      color: var(--gray-300);
-      font-style: italic;
-      font-size: 12.5px;
-    }
-
-    /* EXTRA SECTION */
-    .extra-section {
-      background: var(--gray-100);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 26px;
-      margin-bottom: 32px;
-    }
-
-    .extra-section h3 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--navy);
-      margin-bottom: 4px;
-    }
-
-    .extra-section .sub {
-      font-size: 12px;
-      font-weight: 300;
-      color: var(--gray-500);
-      margin-bottom: 18px;
-    }
-
-    .extra-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .deadline-box {
-      background: var(--navy);
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .deadline-box .dl-label {
-      font-size: 10px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-    }
-
-    .deadline-box .dl-val {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--white);
-    }
-
-    .deadline-box .dl-badge {
-      background: var(--accent);
-      color: var(--white);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 100px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* SUBMIT */
-    .submit-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding-top: 28px;
-    }
-
-    .submit-note {
-      font-size: 12px;
-      font-weight: 300;
-      color: var(--gray-500);
-      line-height: 1.6;
-      max-width: 360px;
-    }
-
-    .submit-note strong { font-weight: 600; color: var(--navy); }
-
-    .btn-submit {
-      background: var(--navy);
-      color: var(--white);
-      border: none;
-      border-radius: 10px;
-      padding: 16px 38px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 13.5px;
-      letter-spacing: 0.3px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 18px rgba(13,34,64,0.28);
-      white-space: nowrap;
-    }
-
-    .btn-submit:hover {
-      background: var(--blue-mid);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(13,34,64,0.32);
-    }
-
-    .btn-submit:active { transform: translateY(0); }
-
-    /* FOOTER */
-    .footer {
-      background: var(--navy);
-      padding: 26px 40px;
-      text-align: center;
-      position: relative;
-    }
-
-    .footer::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), #4EAEFF, var(--accent));
-    }
-
-    .footer-logo {
-      display: inline-flex;
-      align-items: baseline;
-      margin-bottom: 8px;
-      line-height: 1;
-    }
-
-    .footer-logo .fl-a {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 20px;
-      color: var(--white);
-    }
-
-    .footer-logo .fl-rh {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-style: italic;
-      font-size: 20px;
-      color: var(--accent);
-    }
-
-    .footer p { font-size: 11.5px; font-weight: 300; color: rgba(255,255,255,0.4); }
-    .footer .tagline { font-size: 11px; color: rgba(255,255,255,0.3); font-style: italic; margin-top: 4px; }
-
-    /* ── PRINT ── */
-    @media print {
-      body { background: white !important; }
-      .hero, .footer, .deadline-box {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-      .btn-submit, .submit-wrap { display: none !important; }
-      .main { padding: 20px 40px 40px; }
-      .q-card { break-inside: avoid; page-break-inside: avoid; }
-      .pilar { break-inside: avoid; }
-      .q-card textarea {
-        border: 1.5px solid #CBD8EE !important;
-        min-height: 60px;
-        background: #F4F7FC !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-      @page { margin: 0.6cm; size: A4; }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .hero-inner { padding: 36px 20px 32px; }
-      .hero h1 { font-size: 24px; }
-      .client-bar-inner { grid-template-columns: 1fr; padding: 20px; }
-      .main { padding: 24px 20px 48px; }
-      .extra-grid { grid-template-columns: 1fr; }
-      .submit-wrap { flex-direction: column; align-items: stretch; text-align: center; }
-      .deadline-box { flex-direction: column; align-items: flex-start; gap: 10px; }
-    }
-    
-    /* ── CORREÇÕES DE CONTRASTE E BOTÃO DE ENVIAR ── */
-    .pilar-num, 
-    .footer p,
-    .footer a,
-    .footer span,
-    .submit-wrap,
-    .submit-wrap p,
-    .submit-wrap span,
-    .submit-wrap h3,
-    .submit-wrap strong,
-    .deadline-box,
-    .deadline-box p,
-    .deadline-box span,
-    .deadline-box strong {
-      color: #FFFFFF !important;
-    }
-
-    button[type="submit"] {
-      color: #FFFFFF !important; /* Letra branca no fundo azul */
-    }
-
-    button[type="submit"]:hover {
-      color: #034C8B !important; /* Letra azul quando o botão fica branco no hover */
-    }
-    
-  </style>
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:640px){
+  .hero-inner{padding:36px 20px 32px}
+  .hero h1{font-size:26px}
+  .client-bar-inner{padding:20px}
+  .main{padding:24px 20px 48px}
+  .extra-grid{grid-template-columns:1fr}
+  .submit-wrap{flex-direction:column;align-items:stretch;text-align:center}
+  .deadline-box{flex-direction:column;align-items:flex-start;gap:10px}
+  .footer{flex-direction:column;gap:12px;text-align:center;padding:20px}
+  .footer-right{text-align:center}
+}
+</style>
 </head>
 <body>
 
@@ -535,41 +321,43 @@
   <!-- ── HERO ── -->
   <div class="hero">
     <div class="hero-inner">
-      <div class="logo">
-        <a href="https://azumirh.com.br" target="_blank" style="text-decoration: none;">
-  <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
-</a>
-      </div>
-      <h1>Raio-X de <span>Maturidade</span><br/>de Capital Humano</h1>
+      <a href="https://azumirh.com.br" target="_blank" class="hero-logo logo-dark">
+        <svg viewBox="0 0 120 96" fill="none">
+          <defs><linearGradient id="hg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient></defs>
+          <circle cx="44" cy="48" r="34" fill="url(#hg)" opacity=".9"/>
+          <circle cx="76" cy="48" r="34" fill="url(#hg)" opacity=".7"/>
+        </svg>
+        <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+      </a>
+      <div class="hero-tag">Diagnóstico Estratégico · Gratuito</div>
+      <h1>Raio-X de <em>Maturidade</em><br/>de Capital Humano</h1>
       <p class="hero-sub">Olá! Bem-vindo(a) ao Raio-X de Maturidade. Se você chegou até aqui, é porque se importa e deseja entender o grau de maturidade da sua empresa em relação ao seu maior investimento: o capital humano.<br><br>Este é um <strong>pré-diagnóstico</strong>. Quanto mais preciso e sincero(a) você for nas respostas, melhor será o nosso direcionamento. Todas as informações são tratadas com total confidencialidade pelo time da Azumi RH.<br><br><strong>Vamos começar?</strong></p>
     </div>
   </div>
 
-<div class="client-bar">
-  <div class="client-bar-inner" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-    
-    <div class="field-group" style="flex: 1; min-width: 180px;">
-      <label>Nome do Responsável</label>
-      <input type="text" name="nome_responsavel" placeholder="Seu nome" required />
+  <!-- ── CLIENT BAR ── -->
+  <div class="client-bar">
+    <div class="client-bar-inner">
+      <div class="field-group">
+        <label>Nome do Responsável</label>
+        <input type="text" name="nome_responsavel" placeholder="Seu nome" required/>
+      </div>
+      <div class="field-group">
+        <label>Empresa</label>
+        <input type="text" name="empresa" placeholder="Nome da empresa" required/>
+      </div>
+      <div class="field-group">
+        <label>E-mail para contato</label>
+        <input type="email" name="email" placeholder="seu@email.com.br" required/>
+      </div>
+      <div class="field-group">
+        <label>Telefone / WhatsApp</label>
+        <input type="tel" name="whatsapp" placeholder="(11) 99999-9999" required/>
+      </div>
     </div>
-
-    <div class="field-group" style="flex: 1; min-width: 180px;">
-      <label>Empresa</label>
-      <input type="text" name="empresa" placeholder="Nome da empresa" required />
-    </div>
-
-    <div class="field-group" style="flex: 1; min-width: 180px;">
-      <label>E-mail para contato</label>
-      <input type="email" name="email" placeholder="seu@email.com.br" required />
-    </div>
-
-    <div class="field-group" style="flex: 1; min-width: 180px;">
-      <label>Telefone / WhatsApp</label>
-      <input type="tel" name="whatsapp" placeholder="(11) 99999-9999" required />
-    </div>
-
   </div>
-</div>
 
   <!-- ── MAIN ── -->
   <div class="main">
@@ -582,7 +370,7 @@
     <div class="pilar">
       <div class="pilar-header">
         <div class="pilar-num">01</div>
-        <div class="pilar-title-wrap">
+        <div>
           <div class="pilar-label">Pilar 01</div>
           <div class="pilar-title">Pessoas &amp; Liderança</div>
         </div>
@@ -617,7 +405,7 @@
     <div class="pilar">
       <div class="pilar-header">
         <div class="pilar-num">02</div>
-        <div class="pilar-title-wrap">
+        <div>
           <div class="pilar-label">Pilar 02</div>
           <div class="pilar-title">Processos &amp; Fluxos Operacionais</div>
         </div>
@@ -652,7 +440,7 @@
     <div class="pilar">
       <div class="pilar-header">
         <div class="pilar-num">03</div>
-        <div class="pilar-title-wrap">
+        <div>
           <div class="pilar-label">Pilar 03</div>
           <div class="pilar-title">Performance &amp; Dados</div>
         </div>
@@ -687,26 +475,24 @@
     <div class="extra-section">
       <h3>📋 Dados Complementares</h3>
       <p class="sub">Não precisa de nada formal — mande o que tiver disponível.</p>
-
       <div class="extra-grid">
         <div class="field-group">
           <label>Total de colaboradores hoje</label>
-          <input type="text" name="total_colaboradores" placeholder="Ex: 32 pessoas" />
+          <input type="text" name="total_colaboradores" placeholder="Ex: 32 pessoas"/>
         </div>
         <div class="field-group">
           <label>Principais áreas / departamentos</label>
-          <input type="text" name="principais_areas" placeholder="Ex: Comercial, TI, Operações, CS" />
+          <input type="text" name="principais_areas" placeholder="Ex: Comercial, TI, Operações, CS"/>
         </div>
         <div class="field-group">
           <label>Contratações nos últimos 6 meses</label>
-          <input type="text" name="contratacoes_6m" placeholder="Ex: 8 contratações" />
+          <input type="text" name="contratacoes_6m" placeholder="Ex: 8 contratações"/>
         </div>
         <div class="field-group">
           <label>Desligamentos nos últimos 6 meses</label>
-          <input type="text" name="desligamentos_6m" placeholder="Ex: 5 (3 pedidos, 2 demitidos)" />
+          <input type="text" name="desligamentos_6m" placeholder="Ex: 5 (3 pedidos, 2 demitidos)"/>
         </div>
       </div>
-
       <div class="deadline-box">
         <div>
           <div class="dl-label">⏱ Prazo para envio das respostas</div>
@@ -719,42 +505,55 @@
     <!-- SUBMIT -->
     <div class="submit-wrap">
       <p class="submit-note">Após o envio, nossa equipe analisa suas respostas e entrega o seu Raio-X exclusivo em até <strong>36h úteis</strong>. Todas as informações são tratadas com total confidencialidade.</p>
-      <button type="submit" class="btn-submit">Enviar Respostas &rarr;</button>
+      <button type="submit" class="btn-submit">Enviar Respostas →</button>
     </div>
 
   </div><!-- /main -->
 
   <!-- ── FOOTER ── -->
   <div class="footer">
-    <div style="margin-bottom: 16px;">
+    <div class="footer-logo logo-dark">
+      <svg viewBox="0 0 120 96" fill="none">
+        <defs><linearGradient id="fg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+        </linearGradient></defs>
+        <circle cx="44" cy="48" r="34" fill="url(#fg)" opacity=".9"/>
+        <circle cx="76" cy="48" r="34" fill="url(#fg)" opacity=".7"/>
+      </svg>
       <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
     </div>
-    
-    <p style="margin: 0; font-size: 14px; color: #FFFFFF;">
-      (41) 98835-0743 &middot; <a href="mailto:contato@azumirh.com.br" style="color: #FFFFFF; text-decoration: none;">contato@azumirh.com.br</a>
-    </p>
-  </div> </form> <script>
-  var form = document.getElementById("meuFormulario");
-  
-  async function handleSubmit(event) {
-    event.preventDefault(); 
-    var data = new FormData(event.target);
-    fetch(event.target.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    }).then(response => {
-      if (response.ok) {
-        window.location.href = "https://raiox.azumirh.com.br/obrigado.html";
-      } else {
-        alert("Oops! Tivemos um problema ao enviar. Tente novamente.");
-      }
-    }).catch(error => {
+    <div class="footer-right">
+      <div class="footer-contact">
+        (41) 98835-0743 · <a href="mailto:contato@azumirh.com.br">contato@azumirh.com.br</a>
+      </div>
+      <div class="footer-tagline">Cuidar de pessoas é estratégico.</div>
+    </div>
+  </div>
+
+</form>
+
+<script>
+var form = document.getElementById("meuFormulario");
+
+async function handleSubmit(event) {
+  event.preventDefault();
+  var data = new FormData(event.target);
+  fetch(event.target.action, {
+    method: form.method,
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      window.location.href = "https://raiox.azumirh.com.br/obrigado.html";
+    } else {
       alert("Oops! Tivemos um problema ao enviar. Tente novamente.");
-    });
-  }
-  
-  form.addEventListener("submit", handleSubmit);
+    }
+  }).catch(error => {
+    alert("Oops! Tivemos um problema ao enviar. Tente novamente.");
+  });
+}
+
+form.addEventListener("submit", handleSubmit);
 </script>
 
 </body>
