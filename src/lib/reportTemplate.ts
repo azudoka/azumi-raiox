@@ -5,11 +5,11 @@ export interface DadosRelatorio {
   protocolo: string;
   empresa: string;
   segmento?: string;
-  referencia: string; // ex: "JUL/2026"
+  referencia: string;
   sumarioExecutivo: string;
-  prioridades: { titulo: string; descricao: string }[]; // top 3
+  prioridades: { titulo: string; descricao: string }[];
   parecer: string;
-  modeloRecomendado: string; // ex: "HR-as-a-Service — Pacote ONGOING"
+  modeloRecomendado: string;
   trilhaIndicada: string;
   ofertaTexto: string;
   ofertaValidade: string;
@@ -50,7 +50,7 @@ function blocoTecnologia(resultado: ResultadoRaioX): string {
   return `
     <div class="r-section">
       <div class="r-sec-title">Maturidade Digital &amp; IA</div>
-      <div class="r-pilar" style="border-color:#8B5CF6">
+      <div class="r-pilar" style="border-color:#034C8B">
         <div class="r-pilar-head">
           <div class="r-pilar-name">USO DE TECNOLOGIA E IA</div>
           <div class="r-pilar-level"><span class="r-level-label">Nível ${t.nota}/5</span></div>
@@ -59,7 +59,7 @@ function blocoTecnologia(resultado: ResultadoRaioX): string {
           <div class="r-pilar-row"><div class="r-pilar-row-text">${t.resumo || "Sem informações complementares."}</div></div>
         </div>
       </div>
-      <p style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:#778082;font-style:italic;margin-top:8px">
+      <p class="r-nota-rodape">
         Este bloco reflete o compromisso da Azumi RH em avaliar não só processos de pessoas, mas também a maturidade tecnológica da operação — não entra na nota geral dos 4 pilares.
       </p>
     </div>`;
@@ -82,13 +82,13 @@ export function gerarHtmlRelatorio(d: DadosRelatorio): string {
 <head>
 <meta charset="UTF-8"/>
 <title>Raio-X ${d.protocolo}</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --ocean:#031D38;--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--ice:#93C5FD;
+  --ocean:#031D38;--blue:#034C8B;--blue2:#3B82F6;--ice:#93C5FD;
   --gray:#778082;--border:#EDEDED;--text:#222222;
-  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
-  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+  --gm:linear-gradient(135deg,#031D38 0%,#034C8B 55%,#3B82F6 100%);
+  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 55%,#3B82F6 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Space Grotesk',sans-serif;background:#DDE5F0;color:var(--text)}
@@ -96,43 +96,46 @@ body{font-family:'Space Grotesk',sans-serif;background:#DDE5F0;color:var(--text)
 .logo-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
 .paper{width:794px;min-height:1123px;background:#fff;margin:0 auto}
 .r-hero{background:var(--gh);position:relative;padding:38px 48px 34px;overflow:hidden}
-.r-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#034C8B,#3B82F6,#8B5CF6,#3B82F6,#034C8B)}
+.r-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#031D38,#034C8B,#3B82F6)}
 .r-logo{display:inline-flex;align-items:center;gap:9px;margin-bottom:22px;font-size:26px}
 .r-doc-title{font-family:'Sora',sans-serif;font-weight:800;font-size:17px;color:#fff;margin-bottom:20px;text-transform:uppercase}
 .r-meta-grid{display:grid;grid-template-columns:repeat(3,auto);gap:6px 28px}
-.r-meta-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(147,197,253,.75);margin-bottom:2px}
+.r-meta-label{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;text-transform:uppercase;color:rgba(147,197,253,.75);margin-bottom:2px}
 .r-meta-value{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#fff}
 .r-body{padding:34px 48px 46px}
 .r-section{margin-bottom:26px}
-.r-sec-title{font-family:'Sora',sans-serif;font-weight:800;font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:1.8px;margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid #3B82F6}
+.r-sec-title{font-family:'Sora',sans-serif;font-weight:800;font-size:12px;color:var(--blue);text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid #3B82F6}
 .r-summary-text{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;line-height:1.85}
-.r-pilar{margin-bottom:16px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.r-pilar-head{background:var(--gh);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.r-pilar-name{font-family:'Sora',sans-serif;font-weight:700;font-size:11px;color:#fff;letter-spacing:.5px}
+.r-pilares-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.r-pilar{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.r-pilar-head{background:var(--gh);padding:10px 14px;display:flex;flex-direction:column;gap:6px}
+.r-pilar-name{font-family:'Sora',sans-serif;font-weight:700;font-size:11px;color:#fff}
 .r-pilar-level{display:flex;align-items:center;gap:6px}
 .r-level-dots{display:flex;gap:3px}
 .r-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
 .r-dot.active{background:var(--ice)}
-.r-level-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:rgba(255,255,255,.8);margin-left:4px}
-.r-pilar-body{padding:12px 16px}
+.r-level-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;color:rgba(255,255,255,.85)}
+.r-pilar-body{padding:12px 14px}
 .r-pilar-row{margin-bottom:9px}
-.r-pilar-row-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:1.2px;color:var(--blue)}
-.r-pilar-row-text{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:300;line-height:1.7}
+.r-pilar-row:last-child{margin-bottom:0}
+.r-pilar-row-label{font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;text-transform:uppercase;color:var(--blue)}
+.r-pilar-row-text{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:300;color:var(--text);line-height:1.65}
+.r-nota-rodape{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#778082;font-style:italic;margin-top:8px}
 .r-priorities{display:flex;flex-direction:column;gap:10px}
 .r-priority{display:flex;gap:14px;align-items:flex-start;background:#F4F7FC;border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .r-priority-num{width:28px;height:28px;background:var(--gm);color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:12px;flex-shrink:0}
-.r-priority-name{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:var(--ocean);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.r-priority-name{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:var(--ocean);text-transform:uppercase;margin-bottom:3px}
 .r-priority-text{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:300;line-height:1.65}
 .r-parecer-box{background:var(--gh);border-radius:10px;padding:18px 20px;margin-bottom:14px}
 .r-parecer-box p{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:300;color:rgba(255,255,255,.9);line-height:1.75}
 .r-model-row{display:flex;gap:12px;margin-bottom:8px}
 .r-model-badge{background:#F4F7FC;border:1px solid var(--border);border-radius:8px;padding:10px 14px;flex:1}
-.r-model-badge-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--blue)}
+.r-model-badge-label{font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;text-transform:uppercase;color:var(--blue)}
 .r-model-badge-val{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--ocean)}
 .r-oferta{background:var(--gh);border-radius:10px;padding:18px 20px}
-.r-oferta-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--ice);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.r-oferta-title{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:var(--ice);text-transform:uppercase;margin-bottom:8px}
 .r-oferta p{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:300;color:rgba(255,255,255,.9);line-height:1.7;margin-bottom:10px}
-.r-oferta-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:5px 16px;border-radius:100px}
+.r-oferta-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;padding:5px 16px;border-radius:100px}
 .r-footer{background:var(--gh);padding:20px 48px;display:flex;align-items:center;justify-content:space-between}
 .rf-contact{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:300;color:rgba(255,255,255,.7);text-align:right;line-height:1.6}
 .rf-tagline{font-family:'Space Grotesk',sans-serif;font-size:10px;font-style:italic;color:rgba(147,197,253,.6);margin-top:2px}
@@ -162,7 +165,7 @@ body{font-family:'Space Grotesk',sans-serif;background:#DDE5F0;color:var(--text)
 
       <div class="r-section">
         <div class="r-sec-title">2. Análise por Pilar Estratégico</div>
-        ${pilaresHtml}
+        <div class="r-pilares-grid">${pilaresHtml}</div>
       </div>
 
       ${blocoTecnologia(d.resultado)}

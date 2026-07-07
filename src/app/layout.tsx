@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="pt-BR"
-      className={`${poppins.variable} ${sora.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`${poppins.variable} ${sora.variable} ${spaceGrotesk.variable}`}
     >
       <body>{children}</body>
     </html>
