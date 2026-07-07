@@ -1,11 +1,3 @@
-// ══════════════════════════════════════════════════════════════
-// Gera o PDF a partir do HTML do relatório.
-// Detecta automaticamente o ambiente: na Vercel (produção) usa
-// puppeteer-core + @sparticuz/chromium (leve, compatível com
-// serverless). Em dev local, usa o pacote "puppeteer" completo
-// (já baixa um Chromium próprio). Não precisa trocar nada na mão.
-// ══════════════════════════════════════════════════════════════
-
 export async function gerarPdfDeHtml(html: string): Promise<Buffer> {
   const rodandoNaVercel = !!process.env.VERCEL;
 
@@ -14,13 +6,16 @@ export async function gerarPdfDeHtml(html: string): Promise<Buffer> {
   if (rodandoNaVercel) {
     const chromium = (await import("@sparticuz/chromium")).default;
     const puppeteerCore = await import("puppeteer-core");
-    const executablePath = await chromium.executablePath();
+
+    // v5+ API: desativa gráficos GPU desnecessários para geração de PDF
+    chromium.setHeadlessMode = true;
+    chromium.setGraphicsMode = false;
 
     browser = await puppeteerCore.launch({
       args: chromium.args,
       defaultViewport: { width: 794, height: 1123 },
-      executablePath,
-      headless: true,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     });
   } else {
     const puppeteer = await import("puppeteer");
