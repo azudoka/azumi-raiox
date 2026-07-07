@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --ocean: #031d38;
+  --blue: #034c8b;
+  --blue2: #3b82f6;
+  --violet: #8b5cf6;
+  --ice: #93c5fd;
+  --offwhite: #f4f7fc;
+  --white: #ffffff;
+  --text: #222222;
+  --border: #ededed;
+  --gray-500: #778082;
+  --gm: linear-gradient(135deg, #034c8b 0%, #3b82f6 50%, #8b5cf6 100%);
+  --gh: linear-gradient(135deg, #031d38 0%, #034c8b 40%, #3b82f6 75%, #8b5cf6 100%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  background: var(--offwhite);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.logo-dark .logo-azumi {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #fff;
+}
+.logo-dark .logo-rh {
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ice);
+  margin-left: 1px;
+}
