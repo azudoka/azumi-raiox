@@ -19,12 +19,20 @@ interface DadosContato {
   principaisAreas: string;
   contratacoes6m: string;
   desligamentos6m: string;
+  momentoEmpresa: string;
+  juniorNoRH: string;
 }
 
 const TOTAL_ETAPAS = ORDEM_BLOCOS.length + 1;
 
 const FAIXAS_COLABORADORES = ["1-10", "11-50", "51-200", "201-500", "500+"];
 const FAIXAS_MOVIMENTACAO = ["0", "1-5", "6-10", "11-20", "Mais de 20"];
+const OPCOES_MOMENTO_EMPRESA = [
+  "Estamos contratando bastante e crescendo rápido",
+  "Temos o time há um tempo, mas cultura/rotina não acompanhou o crescimento",
+  "Um pouco dos dois",
+];
+const OPCOES_JUNIOR_RH = ["Nenhum", "1-2", "3-5", "Mais de 5"];
 
 export function Wizard() {
   const router = useRouter();
@@ -39,6 +47,8 @@ export function Wizard() {
     principaisAreas: "",
     contratacoes6m: "",
     desligamentos6m: "",
+    momentoEmpresa: "",
+    juniorNoRH: "",
   });
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
@@ -71,7 +81,9 @@ export function Wizard() {
       !!contato.empresa &&
       !!contato.email &&
       contato.whatsapp.replace(/\D/g, "").length >= 10 &&
-      !!contato.totalColaboradores
+      !!contato.totalColaboradores &&
+      !!contato.momentoEmpresa &&
+      !!contato.juniorNoRH
     );
   }
 
@@ -227,6 +239,18 @@ export function Wizard() {
                 value={contato.desligamentos6m}
                 onChange={(v) => setContato({ ...contato, desligamentos6m: v })}
                 opcoes={FAIXAS_MOVIMENTACAO}
+              />
+              <CampoSelect
+                label="Momento da empresa"
+                value={contato.momentoEmpresa}
+                onChange={(v) => setContato({ ...contato, momentoEmpresa: v })}
+                opcoes={OPCOES_MOMENTO_EMPRESA}
+              />
+              <CampoSelect
+                label="Profissionais júnior/estagiário no time de RH"
+                value={contato.juniorNoRH}
+                onChange={(v) => setContato({ ...contato, juniorNoRH: v })}
+                opcoes={OPCOES_JUNIOR_RH}
               />
             </div>
           </div>
