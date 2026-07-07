@@ -88,18 +88,20 @@ function calcularTrilha(notaGeral: number): ResultadoRaioX["trilha"] {
   return "Elevar Nível";
 }
 
-// Cruza nota geral com faixa de colaboradores pra indicar pacote.
-// Empresa grande com nota baixa não cabe no Start mesmo que a nota "peça".
+// Tamanho da empresa manda mais que a nota de maturidade — decisão
+// confirmada: empresa grande sempre indica Growth, empresa média
+// sempre indica Ongoing, independente da nota. A nota só decide o
+// pacote quando a empresa é pequena (1-10 colaboradores).
 function calcularPacote(
   notaGeral: number,
   totalColaboradores: string
 ): ResultadoRaioX["pacoteSugerido"] {
-  const faixaGrande = /50\d|51-200|201-500|500\+/.test(totalColaboradores);
+  const faixaGrande = /51-200|201-500|500\+/.test(totalColaboradores);
   const faixaMedia = /11-50/.test(totalColaboradores);
 
-  if (faixaGrande) return notaGeral < 3 ? "Growth" : "Growth";
-  if (faixaMedia) return notaGeral < 2.5 ? "Ongoing" : "Ongoing";
-  // faixa pequena (1-10) ou não informado
+  if (faixaGrande) return "Growth";
+  if (faixaMedia) return "Ongoing";
+  // faixa pequena (1-10) ou não informado — aqui a nota decide
   return notaGeral < 2 ? "Start" : "Ongoing";
 }
 
