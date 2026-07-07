@@ -11,7 +11,7 @@ export type BlocoId = PilarId | "tecnologia";
 export interface Question {
   id: string;
   bloco: BlocoId;
-  ordem: "A" | "B" | "C";
+  ordem: "A" | "B" | "C" | "D" | "E";
   texto: string;
   hint?: string;
   placeholder: string;
@@ -39,7 +39,7 @@ export const ORDEM_BLOCOS: BlocoId[] = [
 ];
 
 export const QUESTIONS: Question[] = [
-  // ── ESTRATÉGIA (novo) ──────────────────────────────────────
+  // ── ESTRATÉGIA (4 perguntas) ──────────────────────────────────
   {
     id: "estrategia_participacao_decisoes",
     bloco: "estrategia",
@@ -62,8 +62,15 @@ export const QUESTIONS: Question[] = [
     texto: "Se a empresa dobrasse de tamanho amanhã, o RH de hoje aguentaria o tranco, ou quebraria?",
     placeholder: "Seja honesto: o que quebraria primeiro?",
   },
+  {
+    id: "estrategia_participacao_pessoas",
+    bloco: "estrategia",
+    ordem: "D",
+    texto: "Quem participa de fato das decisões relevantes de gente (promoções, contratações estratégicas, cortes de equipe)? Existe um critério claro, ou depende de cada gestor e do momento?",
+    placeholder: "Descreva quem decide e com base em quê.",
+  },
 
-  // ── PROCESSOS & FLUXOS (já existente no formulário atual) ───
+  // ── PROCESSOS & FLUXOS (5 perguntas) ────────────────────────────
   {
     id: "p2_documentos_existentes",
     bloco: "processos",
@@ -86,8 +93,22 @@ export const QUESTIONS: Question[] = [
     texto: "Como é o onboarding de um novo colaborador? Existe um roteiro de integração estruturado ou cada gestor recebe à sua maneira?",
     placeholder: "Descreva o que acontece nos primeiros 30 dias.",
   },
+  {
+    id: "p2_dependencia_pessoa_chave",
+    bloco: "processos",
+    ordem: "D",
+    texto: 'Se amanhã a pessoa responsável por recrutamento sair de férias ou da empresa, o processo de contratação continua rodando da mesma forma, ou para porque só ela sabe "como faz"?',
+    placeholder: "Seja honesto: o processo sobrevive sem essa pessoa específica?",
+  },
+  {
+    id: "p2_mudanca_regra",
+    bloco: "processos",
+    ordem: "E",
+    texto: "Quando uma regra de RH muda (política de home office, banco de horas, elegibilidade de bônus), como essa mudança é registrada e comunicada? Vira procedimento oficial ou fica só na conversa?",
+    placeholder: "Descreva como uma mudança de regra é formalizada hoje.",
+  },
 
-  // ── PESSOAS & LIDERANÇA (já existente no formulário atual) ──
+  // ── PESSOAS & LIDERANÇA (5 perguntas) ───────────────────────────
   {
     id: "p1_feedback_rotina",
     bloco: "pessoas",
@@ -111,8 +132,22 @@ export const QUESTIONS: Question[] = [
     texto: "Quando um colaborador sai da empresa, vocês fazem entrevista de desligamento? O que costuma ser apontado como motivo de saída?",
     placeholder: "Se não fazem entrevista de desligamento, escreva 'não fazemos'.",
   },
+  {
+    id: "p1_desenvolvimento_promocao",
+    bloco: "pessoas",
+    ordem: "D",
+    texto: "Quando alguém é promovido para um cargo de liderança, o que muda concretamente no desenvolvimento dessa pessoa? Ela recebe treinamento e mentoria, ou apenas um novo título, metas e responsabilidades?",
+    placeholder: "Descreva o que acontece na prática após uma promoção pra liderança.",
+  },
+  {
+    id: "p1_conflitos",
+    bloco: "pessoas",
+    ordem: "E",
+    texto: "Como os líderes lidam com conflitos entre pessoas (desentendimentos, queda de entrega, ruídos de comunicação)? Existe um caminho padrão apoiado pelo RH, ou cada um resolve do seu jeito?",
+    placeholder: "Descreva como um conflito típico é tratado hoje.",
+  },
 
-  // ── PERFORMANCE & DADOS (já existente no formulário atual) ──
+  // ── PERFORMANCE & DADOS (4 perguntas) ───────────────────────────
   {
     id: "p3_indicadores",
     bloco: "performance",
@@ -137,8 +172,15 @@ export const QUESTIONS: Question[] = [
     hint: "Os colaboradores sabem exatamente o que é esperado deles em termos de resultado?",
     placeholder: "Ex: existe OKR, meta de vendas, indicadores por área?",
   },
+  {
+    id: "p3_indicadores_conectados_negocio",
+    bloco: "performance",
+    ordem: "D",
+    texto: "Quais indicadores de pessoas a diretoria acompanha com frequência? São apenas números isolados, ou estão conectados a objetivos de negócio (receita, produtividade, qualidade, NPS)?",
+    placeholder: "Descreva quais números a diretoria olha e com que frequência.",
+  },
 
-  // ── TECNOLOGIA / IA (novo — bloco à parte, não conta na nota geral) ──
+  // ── TECNOLOGIA / IA (2 perguntas — sem mudança) ─────────────────
   {
     id: "tecnologia_ferramentas",
     bloco: "tecnologia",
