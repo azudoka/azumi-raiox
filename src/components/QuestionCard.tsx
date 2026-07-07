@@ -17,17 +17,27 @@ export function QuestionCard({ question, nota, texto, onNotaChange, onTextoChang
       style={{
         background: "#fff",
         border: "1.5px solid var(--border)",
-        borderRadius: 12,
-        padding: "20px 22px",
-        marginBottom: 16,
+        borderRadius: 16,
+        padding: "24px 26px",
+        marginBottom: 18,
+        boxShadow: "0 2px 12px rgba(3,29,56,.04)",
       }}
     >
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 13.5, fontWeight: 500, marginBottom: 4 }}>
+      <div style={{ marginBottom: 14 }}>
+        <div
+          style={{
+            fontFamily: "var(--font-space-grotesk)",
+            fontSize: 15,
+            fontWeight: 500,
+            marginBottom: 5,
+            color: "var(--ocean)",
+            lineHeight: 1.5,
+          }}
+        >
           {question.texto}
         </div>
         {question.hint && (
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 12.5, color: "var(--gray-500)" }}>
+          <div style={{ fontFamily: "var(--font-space-grotesk)", fontSize: 12.5, color: "var(--gray-500)", fontStyle: "italic" }}>
             {question.hint}
           </div>
         )}
@@ -43,15 +53,16 @@ export function QuestionCard({ question, nota, texto, onNotaChange, onTextoChang
         style={{
           width: "100%",
           border: "1.5px solid #EEF2F8",
-          borderRadius: 8,
-          padding: "11px 14px",
-          fontSize: 13,
+          borderRadius: 10,
+          padding: "12px 15px",
+          fontSize: 13.5,
           fontWeight: 300,
           color: "var(--text)",
           background: "var(--offwhite)",
           resize: "vertical",
           outline: "none",
           lineHeight: 1.7,
+          fontFamily: "var(--font-space-grotesk)",
         }}
       />
     </div>

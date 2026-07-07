@@ -22,7 +22,7 @@ export function LevelSelector({ value, onChange }: LevelSelectorProps) {
               border: `1.5px solid ${selecionado ? "transparent" : "var(--border)"}`,
               borderRadius: 100,
               background: selecionado ? "var(--gm)" : "#fff",
-              fontFamily: "'JetBrains Mono', monospace",
+              fontFamily: "var(--font-space-grotesk)",
               fontSize: 11,
               fontWeight: 500,
               color: selecionado ? "#fff" : "var(--gray-500)",

@@ -1,23 +1,31 @@
 // ══════════════════════════════════════════════════════════════
 // Gera o PDF a partir do HTML do relatório.
-// Em produção (Vercel) usa puppeteer-core + @sparticuz/chromium
-// (o Chrome "normal" não roda em serverless). Em dev local, se
-// preferir, pode instalar "puppeteer" completo e trocar o import
-// abaixo — deixei os dois caminhos comentados pra facilitar.
+// Detecta automaticamente o ambiente: na Vercel (produção) usa
+// puppeteer-core + @sparticuz/chromium (leve, compatível com
+// serverless). Em dev local, usa o pacote "puppeteer" completo
+// (já baixa um Chromium próprio). Não precisa trocar nada na mão.
 // ══════════════════════════════════════════════════════════════
 
-import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer-core";
-
 export async function gerarPdfDeHtml(html: string): Promise<Buffer> {
-  const executablePath = await chromium.executablePath();
+  const rodandoNaVercel = !!process.env.VERCEL;
 
-  const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: { width: 794, height: 1123 },
-    executablePath,
-    headless: true,
-  });
+  let browser: any;
+
+  if (rodandoNaVercel) {
+    const chromium = (await import("@sparticuz/chromium")).default;
+    const puppeteerCore = await import("puppeteer-core");
+    const executablePath = await chromium.executablePath();
+
+    browser = await puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: { width: 794, height: 1123 },
+      executablePath,
+      headless: true,
+    });
+  } else {
+    const puppeteer = await import("puppeteer");
+    browser = await puppeteer.launch({ headless: true });
+  }
 
   try {
     const page = await browser.newPage();
@@ -32,17 +40,3 @@ export async function gerarPdfDeHtml(html: string): Promise<Buffer> {
     await browser.close();
   }
 }
-
-/*
-─────────────────────────────────────────────────────────────────
-DEV LOCAL: se `chromium.executablePath()` falhar na sua máquina
-(comum fora da Vercel), troque temporariamente por:
-
-  import puppeteer from "puppeteer"; // pacote completo, já no devDependencies
-  const browser = await puppeteer.launch({ headless: true });
-
-E lembre de trocar de volta antes de fazer deploy — em produção
-precisa ser puppeteer-core + @sparticuz/chromium, senão o build
-da Vercel fica gigante ou nem sobe (limite de tamanho de função).
-─────────────────────────────────────────────────────────────────
-*/

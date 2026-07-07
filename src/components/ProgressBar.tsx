@@ -1,7 +1,7 @@
 "use client";
 
 interface ProgressBarProps {
-  etapaAtual: number; // 1-indexed
+  etapaAtual: number;
   totalEtapas: number;
   labelEtapa: string;
 }
@@ -10,18 +10,18 @@ export function ProgressBar({ etapaAtual, totalEtapas, labelEtapa }: ProgressBar
   const percentual = Math.round((etapaAtual / totalEtapas) * 100);
 
   return (
-    <div style={{ marginBottom: 28 }}>
+    <div style={{ marginBottom: 32 }}>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          fontFamily: "'JetBrains Mono', monospace",
-          fontSize: 10,
+          fontFamily: "var(--font-space-grotesk)",
+          fontSize: 10.5,
           fontWeight: 500,
           letterSpacing: 1.2,
           textTransform: "uppercase",
           color: "var(--gray-500)",
-          marginBottom: 8,
+          marginBottom: 10,
         }}
       >
         <span>
@@ -35,7 +35,7 @@ export function ProgressBar({ etapaAtual, totalEtapas, labelEtapa }: ProgressBar
             height: "100%",
             width: `${percentual}%`,
             background: "var(--gm)",
-            transition: "width .3s ease",
+            transition: "width .4s ease",
           }}
         />
       </div>

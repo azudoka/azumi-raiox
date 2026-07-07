@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { PILARES_LABEL, PilarId } from "@/lib/questions";
+import { Logo } from "@/components/Logo";
 
 interface ResultadoSalvo {
   protocolo: string;
@@ -22,7 +23,7 @@ export default function ObrigadoPage() {
 
   if (!resultado) {
     return (
-      <div style={{ padding: 60, textAlign: "center", fontFamily: "'Space Grotesk', sans-serif" }}>
+      <div style={{ padding: 60, textAlign: "center", fontFamily: "var(--font-space-grotesk)" }}>
         <p>Não encontramos os dados do seu diagnóstico nesta sessão.</p>
         <a href="/questionario" style={{ color: "var(--blue2)" }}>
           Fazer o Raio-X novamente
@@ -43,9 +44,13 @@ export default function ObrigadoPage() {
           textAlign: "center",
         }}
       >
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+          <Logo variant="light" size={22} />
+        </div>
+
         <div
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "var(--font-space-grotesk)",
             fontSize: 10,
             fontWeight: 500,
             letterSpacing: 2,
@@ -57,11 +62,11 @@ export default function ObrigadoPage() {
           Protocolo {resultado.protocolo}
         </div>
 
-        <h1 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 800, fontSize: 24, color: "var(--ocean)", marginBottom: 4 }}>
+        <h1 style={{ fontFamily: "var(--font-sora)", fontWeight: 800, fontSize: 24, color: "var(--ocean)", marginBottom: 4 }}>
           Seu Raio-X está pronto!
         </h1>
 
-        <div style={{ fontSize: 48, fontWeight: 800, fontFamily: "'Sora', sans-serif", color: "var(--blue2)", margin: "16px 0" }}>
+        <div style={{ fontSize: 48, fontWeight: 800, fontFamily: "var(--font-sora)", color: "var(--blue2)", margin: "16px 0" }}>
           {resultado.notaGeral}
           <span style={{ fontSize: 20, color: "var(--gray-500)" }}>/5</span>
         </div>

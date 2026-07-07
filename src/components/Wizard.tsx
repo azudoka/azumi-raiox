@@ -21,11 +21,14 @@ interface DadosContato {
   desligamentos6m: string;
 }
 
-const TOTAL_ETAPAS = ORDEM_BLOCOS.length + 1; // 5 blocos + 1 etapa de contato
+const TOTAL_ETAPAS = ORDEM_BLOCOS.length + 1;
+
+const FAIXAS_COLABORADORES = ["1-10", "11-50", "51-200", "201-500", "500+"];
+const FAIXAS_MOVIMENTACAO = ["0", "1-5", "6-10", "11-20", "Mais de 20"];
 
 export function Wizard() {
   const router = useRouter();
-  const [etapa, setEtapa] = useState(1); // 1-indexed
+  const [etapa, setEtapa] = useState(1);
   const [respostas, setRespostas] = useState<RespostaEstado>({});
   const [contato, setContato] = useState<DadosContato>({
     nomeResponsavel: "",
@@ -39,6 +42,7 @@ export function Wizard() {
   });
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
+  const [animKey, setAnimKey] = useState(0);
 
   const blocoAtual = etapa <= ORDEM_BLOCOS.length ? ORDEM_BLOCOS[etapa - 1] : null;
   const perguntasDoBloco = useMemo(
@@ -66,24 +70,36 @@ export function Wizard() {
       !!contato.nomeResponsavel &&
       !!contato.empresa &&
       !!contato.email &&
-      !!contato.whatsapp &&
+      contato.whatsapp.replace(/\D/g, "").length >= 10 &&
       !!contato.totalColaboradores
     );
   }
 
+  function irPara(novaEtapa: number) {
+    setEtapa(novaEtapa);
+    setAnimKey((k) => k + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   async function avancar() {
     if (etapa <= ORDEM_BLOCOS.length) {
-      setEtapa((e) => e + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      irPara(etapa + 1);
       return;
     }
-    // última etapa: enviar
     await enviar();
   }
 
   function voltar() {
-    setEtapa((e) => Math.max(1, e - 1));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    irPara(Math.max(1, etapa - 1));
+  }
+
+  function onWhatsappChange(valor: string) {
+    const apenasDigitos = valor.replace(/\D/g, "").slice(0, 11);
+    let formatado = apenasDigitos;
+    if (apenasDigitos.length > 2) {
+      formatado = `(${apenasDigitos.slice(0, 2)}) ${apenasDigitos.slice(2, 7)}${apenasDigitos.length > 7 ? "-" + apenasDigitos.slice(7) : ""}`;
+    }
+    setContato((c) => ({ ...c, whatsapp: formatado }));
   }
 
   async function enviar() {
@@ -123,54 +139,101 @@ export function Wizard() {
   const podeAvancar = blocoAtual ? blocoCompleto() : contatoCompleto();
 
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto", padding: "40px 20px 80px" }}>
+    <div style={{ maxWidth: 820, margin: "0 auto", padding: "48px 24px 100px" }}>
       <ProgressBar etapaAtual={etapa} totalEtapas={TOTAL_ETAPAS} labelEtapa={labelEtapaAtual} />
 
-      {blocoAtual && (
-        <div>
-          <h2
-            style={{
-              fontFamily: "'Sora', sans-serif",
-              fontWeight: 800,
-              fontSize: 20,
-              color: "var(--ocean)",
-              marginBottom: 18,
-            }}
-          >
-            {BLOCOS_LABEL[blocoAtual]}
-          </h2>
-          {perguntasDoBloco.map((q) => (
-            <QuestionCard
-              key={q.id}
-              question={q}
-              nota={respostas[q.id]?.nota ?? null}
-              texto={respostas[q.id]?.texto ?? ""}
-              onNotaChange={(nota) => atualizarResposta(q.id, "nota", nota)}
-              onTextoChange={(texto) => atualizarResposta(q.id, "texto", texto)}
-            />
-          ))}
-        </div>
-      )}
-
-      {!blocoAtual && (
-        <div>
-          <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 800, fontSize: 20, color: "var(--ocean)", marginBottom: 18 }}>
-            Últimos dados pra gerar seu relatório
-          </h2>
-          <div style={{ display: "grid", gap: 14 }}>
-            <Campo label="Nome do Responsável" value={contato.nomeResponsavel} onChange={(v) => setContato({ ...contato, nomeResponsavel: v })} />
-            <Campo label="Empresa" value={contato.empresa} onChange={(v) => setContato({ ...contato, empresa: v })} />
-            <Campo label="E-mail" value={contato.email} onChange={(v) => setContato({ ...contato, email: v })} type="email" />
-            <Campo label="WhatsApp" value={contato.whatsapp} onChange={(v) => setContato({ ...contato, whatsapp: v })} />
-            <Campo label="Total de colaboradores" value={contato.totalColaboradores} onChange={(v) => setContato({ ...contato, totalColaboradores: v })} placeholder="Ex: 1-10, 11-50, 51-200..." />
-            <Campo label="Principais áreas / segmento" value={contato.principaisAreas} onChange={(v) => setContato({ ...contato, principaisAreas: v })} />
-            <Campo label="Contratações últimos 6 meses" value={contato.contratacoes6m} onChange={(v) => setContato({ ...contato, contratacoes6m: v })} />
-            <Campo label="Desligamentos últimos 6 meses" value={contato.desligamentos6m} onChange={(v) => setContato({ ...contato, desligamentos6m: v })} />
+      <div
+        key={animKey}
+        className="fade-slide-in"
+        style={{
+          background: "#fff",
+          borderRadius: 24,
+          padding: "36px 40px",
+          boxShadow: "0 8px 32px rgba(3,29,56,.06)",
+          border: "1px solid var(--border)",
+        }}
+      >
+        {blocoAtual && (
+          <div>
+            <h2
+              style={{
+                fontFamily: "var(--font-sora)",
+                fontWeight: 800,
+                fontSize: 22,
+                color: "var(--ocean)",
+                marginBottom: 6,
+              }}
+            >
+              {BLOCOS_LABEL[blocoAtual]}
+            </h2>
+            <p style={{ fontFamily: "var(--font-space-grotesk)", fontSize: 13, color: "var(--gray-500)", marginBottom: 24 }}>
+              Responda com a nota que melhor descreve a realidade de hoje, e detalhe no campo de texto.
+            </p>
+            {perguntasDoBloco.map((q) => (
+              <QuestionCard
+                key={q.id}
+                question={q}
+                nota={respostas[q.id]?.nota ?? null}
+                texto={respostas[q.id]?.texto ?? ""}
+                onNotaChange={(nota) => atualizarResposta(q.id, "nota", nota)}
+                onTextoChange={(texto) => atualizarResposta(q.id, "texto", texto)}
+              />
+            ))}
           </div>
-        </div>
-      )}
+        )}
 
-      {erro && <p style={{ color: "#b91c1c", fontSize: 13, marginTop: 12 }}>{erro}</p>}
+        {!blocoAtual && (
+          <div>
+            <h2
+              style={{
+                fontFamily: "var(--font-sora)",
+                fontWeight: 800,
+                fontSize: 22,
+                color: "var(--ocean)",
+                marginBottom: 6,
+              }}
+            >
+              Últimos dados pra gerar seu relatório
+            </h2>
+            <p style={{ fontFamily: "var(--font-space-grotesk)", fontSize: 13, color: "var(--gray-500)", marginBottom: 24 }}>
+              É pra onde enviamos o link do seu Raio-X e, se quiser, conversamos sobre os resultados.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <Campo label="Nome do Responsável" value={contato.nomeResponsavel} onChange={(v) => setContato({ ...contato, nomeResponsavel: v })} />
+              <Campo label="Empresa" value={contato.empresa} onChange={(v) => setContato({ ...contato, empresa: v })} />
+              <Campo label="E-mail Corporativo" value={contato.email} onChange={(v) => setContato({ ...contato, email: v })} type="email" />
+              <Campo
+                label="WhatsApp"
+                value={contato.whatsapp}
+                onChange={onWhatsappChange}
+                type="tel"
+                placeholder="(00) 00000-0000"
+              />
+              <CampoSelect
+                label="Total de colaboradores"
+                value={contato.totalColaboradores}
+                onChange={(v) => setContato({ ...contato, totalColaboradores: v })}
+                opcoes={FAIXAS_COLABORADORES}
+              />
+              <Campo label="Principais áreas / segmento" value={contato.principaisAreas} onChange={(v) => setContato({ ...contato, principaisAreas: v })} />
+              <CampoSelect
+                label="Contratações últimos 6 meses"
+                value={contato.contratacoes6m}
+                onChange={(v) => setContato({ ...contato, contratacoes6m: v })}
+                opcoes={FAIXAS_MOVIMENTACAO}
+              />
+              <CampoSelect
+                label="Desligamentos últimos 6 meses"
+                value={contato.desligamentos6m}
+                onChange={(v) => setContato({ ...contato, desligamentos6m: v })}
+                opcoes={FAIXAS_MOVIMENTACAO}
+              />
+            </div>
+          </div>
+        )}
+
+        {erro && <p style={{ color: "#b91c1c", fontSize: 13, marginTop: 16, fontFamily: "var(--font-space-grotesk)" }}>{erro}</p>}
+      </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28 }}>
         <button
@@ -178,10 +241,11 @@ export function Wizard() {
           onClick={voltar}
           disabled={etapa === 1 || enviando}
           style={{
-            padding: "12px 24px",
+            padding: "13px 26px",
             borderRadius: 100,
             border: "1.5px solid var(--border)",
             background: "#fff",
+            fontFamily: "var(--font-space-grotesk)",
             fontWeight: 600,
             fontSize: 13,
             cursor: etapa === 1 ? "default" : "pointer",
@@ -195,15 +259,17 @@ export function Wizard() {
           onClick={avancar}
           disabled={!podeAvancar || enviando}
           style={{
-            padding: "12px 32px",
+            padding: "13px 34px",
             borderRadius: 100,
             border: "none",
             background: "var(--gm)",
             color: "#fff",
+            fontFamily: "var(--font-space-grotesk)",
             fontWeight: 700,
             fontSize: 13,
             cursor: podeAvancar && !enviando ? "pointer" : "default",
             opacity: podeAvancar && !enviando ? 1 : 0.5,
+            boxShadow: podeAvancar && !enviando ? "0 4px 18px rgba(59,130,246,.3)" : "none",
           }}
         >
           {enviando
@@ -231,10 +297,10 @@ function Campo({
   placeholder?: string;
 }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <label
         style={{
-          fontFamily: "'JetBrains Mono', monospace",
+          fontFamily: "var(--font-space-grotesk)",
           fontSize: 10,
           fontWeight: 500,
           letterSpacing: 1.4,
@@ -251,13 +317,66 @@ function Campo({
         onChange={(e) => onChange(e.target.value)}
         style={{
           border: "1.5px solid var(--border)",
-          borderRadius: 8,
-          padding: "10px 13px",
-          fontSize: 13,
+          borderRadius: 10,
+          padding: "11px 14px",
+          fontSize: 13.5,
+          fontFamily: "var(--font-space-grotesk)",
           background: "var(--offwhite)",
           outline: "none",
         }}
       />
+    </div>
+  );
+}
+
+function CampoSelect({
+  label,
+  value,
+  onChange,
+  opcoes,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  opcoes: string[];
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <label
+        style={{
+          fontFamily: "var(--font-space-grotesk)",
+          fontSize: 10,
+          fontWeight: 500,
+          letterSpacing: 1.4,
+          textTransform: "uppercase",
+          color: "var(--gray-500)",
+        }}
+      >
+        {label}
+      </label>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          border: "1.5px solid var(--border)",
+          borderRadius: 10,
+          padding: "11px 14px",
+          fontSize: 13.5,
+          fontFamily: "var(--font-space-grotesk)",
+          background: "var(--offwhite)",
+          outline: "none",
+          color: value ? "var(--text)" : "var(--gray-500)",
+        }}
+      >
+        <option value="" disabled>
+          Selecione…
+        </option>
+        {opcoes.map((op) => (
+          <option key={op} value={op}>
+            {op}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
