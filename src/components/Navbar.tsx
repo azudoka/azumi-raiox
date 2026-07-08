@@ -36,10 +36,11 @@ export function Navbar() {
       >
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
           <Image
-            src="/logo-azumi-dark.png"
+            src="/logo-azumi-light.png"
             alt="Azumi RH"
-            width={120}
-            height={40}
+            width={0}
+            height={0}
+            sizes="160px"
             style={{ objectFit: "contain", height: 34, width: "auto" }}
             priority
           />

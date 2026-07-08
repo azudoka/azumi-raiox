@@ -21,9 +21,10 @@ export function Footer() {
             <Image
               src="/logo-azumi-dark.png"
               alt="Azumi RH"
-              width={130}
-              height={44}
-              style={{ objectFit: "contain", height: 44, width: "auto", filter: "brightness(0) invert(1)" }}
+              width={0}
+              height={0}
+              sizes="160px"
+              style={{ objectFit: "contain", height: 44, width: "auto" }}
             />
             <p
               style={{
