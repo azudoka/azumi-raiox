@@ -180,8 +180,9 @@ export default function HomePage() {
       </section>
 
       {/* ── O QUE VOCÊ RECEBE ── */}
-      <section style={{ padding: "20px 24px 80px" }}>
-        <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+      <section style={{ padding: "20px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <div className="blob-float section-blob-top-right" />
+        <div style={{ maxWidth: 1040, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <h2
             style={{
               fontFamily: "var(--font-sora)",
@@ -247,8 +248,9 @@ export default function HomePage() {
       </section>
 
       {/* ── COMO FUNCIONA (método com dots conectados) ── */}
-      <section style={{ padding: "0 24px 90px" }}>
-        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+      <section style={{ padding: "0 24px 90px", position: "relative", overflow: "hidden" }}>
+        <div className="blob-float section-blob-bottom-left" style={{ animationDelay: "2s" }} />
+        <div style={{ maxWidth: 780, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <h2
             style={{
               fontFamily: "var(--font-sora)",
