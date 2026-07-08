@@ -252,7 +252,7 @@ export function Wizard() {
               marginBottom: 16,
             }}
           >
-            Bem-vinda ao Raio-X de{" "}
+            Bem-vindo(a) ao Raio-X de{" "}
             <span
               style={{
                 background: "var(--gm)",
