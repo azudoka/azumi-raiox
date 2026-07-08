@@ -24,7 +24,7 @@ export function Navbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "12px 28px",
+          padding: "10px 28px",
           borderRadius: 100,
           background: "rgba(255,255,255,0.88)",
           backdropFilter: "blur(18px)",
@@ -41,7 +41,7 @@ export function Navbar() {
             width={0}
             height={0}
             sizes="160px"
-            style={{ objectFit: "contain", height: 34, width: "auto" }}
+            style={{ objectFit: "contain", height: 52, width: "auto" }}
             priority
           />
         </Link>

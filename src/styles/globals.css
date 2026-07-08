@@ -120,14 +120,30 @@ textarea {
   }
 }
 
+/* Formulário de dados — grid 2 colunas, colapsa em mobile */
+.dados-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* min-width: 0 evita que inputs forcem o grid a crescer além do container */
+.dados-grid > * {
+  min-width: 0;
+}
+
 /* Wizard — reduz padding interno no mobile pra não apertar */
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .wizard-card {
-    padding: 24px 20px !important;
+    padding: 22px 18px !important;
+    border-radius: 18px !important;
   }
   .wizard-wrap {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  .dados-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 

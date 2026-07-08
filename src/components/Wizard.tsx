@@ -477,7 +477,7 @@ export function Wizard() {
             >
               É pra onde enviamos o link do seu Raio-X e, se quiser, conversamos sobre os resultados.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="dados-grid">
               <Campo label="Nome do Responsável" value={contato.nomeResponsavel} onChange={(v) => setContato({ ...contato, nomeResponsavel: v })} />
               <Campo label="Empresa" value={contato.empresa} onChange={(v) => setContato({ ...contato, empresa: v })} />
               <Campo label="E-mail Corporativo" value={contato.email} onChange={(v) => setContato({ ...contato, email: v })} type="email" />
@@ -496,13 +496,13 @@ export function Wizard() {
               />
               <Campo label="Principais áreas / segmento" value={contato.principaisAreas} onChange={(v) => setContato({ ...contato, principaisAreas: v })} />
               <CampoSelect
-                label="Contratações últimos 6 meses"
+                label="Contratações nos últimos 6 meses"
                 value={contato.contratacoes6m}
                 onChange={(v) => setContato({ ...contato, contratacoes6m: v })}
                 opcoes={FAIXAS_MOVIMENTACAO}
               />
               <CampoSelect
-                label="Desligamentos últimos 6 meses"
+                label="Desligamentos nos últimos 6 meses"
                 value={contato.desligamentos6m}
                 onChange={(v) => setContato({ ...contato, desligamentos6m: v })}
                 opcoes={FAIXAS_MOVIMENTACAO}
