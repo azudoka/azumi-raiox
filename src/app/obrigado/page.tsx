@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { PILARES_LABEL, PilarId } from "@/lib/questions";
-import { Logo } from "@/components/Logo";
+import Image from "next/image";
 
 interface ResultadoSalvo {
   protocolo: string;
@@ -85,7 +85,14 @@ export default function ObrigadoPage() {
         }}
       >
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 22 }}>
-          <Logo variant="light" size={24} />
+          <Image
+            src="/logo-azumi-light.png"
+            alt="Azumi RH"
+            width={0}
+            height={0}
+            sizes="200px"
+            style={{ height: 48, width: "auto", objectFit: "contain" }}
+          />
         </div>
 
         <div

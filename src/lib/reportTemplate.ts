@@ -1,5 +1,20 @@
+import fs from "fs";
+import path from "path";
 import { ResultadoRaioX } from "./scoring";
 import { PILARES_LABEL, PilarId } from "./questions";
+
+function lerLogoBase64(arquivo: string): string {
+  try {
+    const buf = fs.readFileSync(path.join(process.cwd(), "public", arquivo));
+    return `data:image/png;base64,${buf.toString("base64")}`;
+  } catch {
+    return "";
+  }
+}
+
+// Lido uma vez por processo (cache de módulo)
+const LOGO_DARK_SRC = lerLogoBase64("logo-azumi-dark.png");   // branca — para fundos escuros (header/footer do PDF)
+const LOGO_LIGHT_SRC = lerLogoBase64("logo-azumi-light.png"); // colorida — para fundos claros
 
 export interface DadosRelatorio {
   protocolo: string;
@@ -145,7 +160,7 @@ body{font-family:'Space Grotesk',sans-serif;background:#DDE5F0;color:var(--text)
 <body>
   <div class="paper">
     <div class="r-hero">
-      <div class="r-logo logo-dark"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></div>
+      <img src="${LOGO_DARK_SRC}" alt="Azumi RH" style="height:42px;width:auto;object-fit:contain;display:block;margin-bottom:22px">
       <div class="r-doc-title">Relatório de Diagnóstico | Raio-X : Maturidade do Capital Humano</div>
       <div class="r-meta-grid">
         <div><div class="r-meta-label">Empresa</div><div class="r-meta-value">${d.empresa}</div></div>
@@ -206,7 +221,7 @@ body{font-family:'Space Grotesk',sans-serif;background:#DDE5F0;color:var(--text)
     </div>
 
     <div class="r-footer">
-      <div class="rf-logo logo-dark"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></div>
+      <img src="${LOGO_DARK_SRC}" alt="Azumi RH" style="height:32px;width:auto;object-fit:contain;display:block">
       <div>
         <div class="rf-contact">(41) 98835-0743 · contato@azumirh.com.br · azumirh.com.br</div>
         <div class="rf-tagline">Cuidar de pessoas é estratégico.</div>

@@ -24,7 +24,7 @@ export function Footer() {
               width={0}
               height={0}
               sizes="160px"
-              style={{ objectFit: "contain", height: 90, width: "auto" }}
+              style={{ objectFit: "contain", height: 54, width: "auto" }}
             />
             <p
               style={{
