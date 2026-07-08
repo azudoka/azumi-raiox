@@ -18,6 +18,8 @@ interface SubmitBody {
   principaisAreas?: string;
   contratacoes6m?: string;
   desligamentos6m?: string;
+  momentoEmpresa?: string;
+  juniorNoRH?: string;
   respostas: RespostasMap;
 }
 
@@ -108,6 +110,8 @@ export async function POST(req: NextRequest) {
     principais_areas: body.principaisAreas ?? null,
     contratacoes_6m: body.contratacoes6m ?? null,
     desligamentos_6m: body.desligamentos6m ?? null,
+    momento_empresa: body.momentoEmpresa ?? null,
+    junior_no_rh: body.juniorNoRH ?? null,
     respostas: body.respostas,
     resultado,
     pdf_url: pdfUrl,
