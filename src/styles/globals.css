@@ -107,6 +107,19 @@ textarea {
   box-shadow: 0 10px 28px rgba(59, 130, 246, 0.4) !important;
 }
 
+/* Texto com destaque de palavra-chave — usar <strong className="highlight"> */
+.highlight {
+  color: var(--blue2);
+  font-weight: 600;
+}
+
+/* Responsivo do footer */
+@media (max-width: 640px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* Grid de 4 entregas — 4 colunas desktop */
 .entregas-grid {
   display: grid;

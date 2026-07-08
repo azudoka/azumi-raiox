@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { BarChart3, Target, FileDown, Sparkles, ClipboardEdit, LineChart, Send } from "lucide-react";
-import { Logo } from "@/components/Logo";
 import heroRaioX from "@/heroraiox.png";
 
 const ENTREGAS = [
@@ -73,7 +72,7 @@ export default function HomePage() {
             margin: "0 auto",
             position: "relative",
             zIndex: 1,
-            padding: "44px 0 64px",
+            padding: "56px 0 64px",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: 56,
@@ -81,8 +80,6 @@ export default function HomePage() {
           }}
         >
           <div>
-            <Logo variant="light" size={26} />
-
             <div
               style={{
                 display: "inline-block",
@@ -96,7 +93,7 @@ export default function HomePage() {
                 textTransform: "uppercase",
                 padding: "6px 14px",
                 borderRadius: 100,
-                margin: "28px 0 18px",
+                marginBottom: 20,
               }}
             >
               Diagnóstico Estratégico · Gratuito
