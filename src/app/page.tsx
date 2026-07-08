@@ -44,10 +44,10 @@ export default function HomePage() {
             position: "absolute",
             top: -120,
             right: -100,
-            width: 480,
-            height: 480,
+            width: 460,
+            height: 460,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(139,92,246,.18) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(139,92,246,.16) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -57,10 +57,10 @@ export default function HomePage() {
             position: "absolute",
             bottom: -140,
             left: -80,
-            width: 420,
-            height: 420,
+            width: 400,
+            height: 400,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(59,130,246,.14) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(59,130,246,.13) 0%, transparent 70%)",
             pointerEvents: "none",
             animationDelay: "3s",
           }}
@@ -69,14 +69,14 @@ export default function HomePage() {
         <div
           className="hero-grid"
           style={{
-            maxWidth: 960,
+            maxWidth: 1100,
             margin: "0 auto",
             position: "relative",
             zIndex: 1,
-            padding: "40px 0 60px",
+            padding: "44px 0 64px",
             display: "grid",
-            gridTemplateColumns: "1.1fr 0.9fr",
-            gap: 48,
+            gridTemplateColumns: "1fr 1fr",
+            gap: 56,
             alignItems: "center",
           }}
         >
@@ -89,9 +89,9 @@ export default function HomePage() {
                 background: "rgba(59,130,246,.08)",
                 border: "1px solid rgba(59,130,246,.2)",
                 color: "var(--blue)",
-                fontFamily: "var(--font-space-grotesk)",
+                fontFamily: "var(--font-sora)",
                 fontSize: 10,
-                fontWeight: 500,
+                fontWeight: 600,
                 letterSpacing: 2.5,
                 textTransform: "uppercase",
                 padding: "6px 14px",
@@ -106,11 +106,10 @@ export default function HomePage() {
               style={{
                 fontFamily: "var(--font-sora)",
                 fontWeight: 800,
-                fontSize: "clamp(32px, 5vw, 46px)",
+                fontSize: "clamp(30px, 4.5vw, 44px)",
                 color: "var(--ocean)",
-                lineHeight: 1.15,
+                lineHeight: 1.18,
                 marginBottom: 18,
-                maxWidth: 620,
               }}
             >
               Descubra o nível de{" "}
@@ -129,12 +128,12 @@ export default function HomePage() {
 
             <p
               style={{
-                fontFamily: "var(--font-space-grotesk)",
+                fontFamily: "var(--font-poppins)",
                 fontSize: 15,
                 fontWeight: 300,
                 color: "var(--gray-500)",
                 lineHeight: 1.8,
-                maxWidth: 520,
+                maxWidth: 460,
                 marginBottom: 32,
               }}
             >
@@ -154,7 +153,7 @@ export default function HomePage() {
                 color: "#fff",
                 padding: "16px 34px",
                 borderRadius: 100,
-                fontFamily: "var(--font-space-grotesk)",
+                fontFamily: "var(--font-sora)",
                 fontWeight: 700,
                 fontSize: 14,
                 textDecoration: "none",
@@ -166,22 +165,46 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div
-            className="hero-image-col"
-            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-          >
-            <Image
-              src={heroRaioX}
-              alt="Raio-X de Maturidade de RH"
-              style={{ width: "100%", height: "auto", objectFit: "contain" }}
+          <div style={{ position: "relative" }}>
+            <div
+              style={{
+                position: "absolute",
+                inset: "-16px",
+                borderRadius: 28,
+                background: "var(--gm)",
+                opacity: 0.12,
+                transform: "rotate(-2deg)",
+              }}
             />
+            <div
+              style={{
+                position: "relative",
+                background: "#fff",
+                borderRadius: 24,
+                padding: 10,
+                boxShadow: "0 24px 60px -20px rgba(3,29,56,.25)",
+                border: "1px solid var(--border)",
+              }}
+            >
+              <Image
+                src={heroRaioX}
+                alt="Raio-X de Maturidade Azumi RH"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                  borderRadius: 18,
+                  display: "block",
+                }}
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── O QUE VOCÊ RECEBE ── */}
       <section style={{ padding: "20px 24px 80px", position: "relative", overflow: "hidden" }}>
-        <div className="blob-float section-blob-top-right" />
         <div style={{ maxWidth: 1040, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <h2
             style={{
@@ -195,13 +218,7 @@ export default function HomePage() {
           >
             O que você recebe
           </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-              gap: 20,
-            }}
-          >
+          <div className="entregas-grid">
             {ENTREGAS.map((item) => (
               <div
                 key={item.titulo}
@@ -211,6 +228,8 @@ export default function HomePage() {
                   border: "1.5px solid var(--border)",
                   borderRadius: 18,
                   padding: "28px 24px",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
                 <div
@@ -238,7 +257,7 @@ export default function HomePage() {
                 >
                   {item.titulo}
                 </h3>
-                <p style={{ fontFamily: "var(--font-space-grotesk)", fontSize: 13, fontWeight: 300, color: "var(--gray-500)", lineHeight: 1.7 }}>
+                <p style={{ fontFamily: "var(--font-poppins)", fontSize: 13, fontWeight: 300, color: "var(--gray-500)", lineHeight: 1.7 }}>
                   {item.descricao}
                 </p>
               </div>
@@ -247,10 +266,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── COMO FUNCIONA (método com dots conectados) ── */}
+      {/* ── COMO FUNCIONA ── */}
       <section style={{ padding: "0 24px 90px", position: "relative", overflow: "hidden" }}>
-        <div className="blob-float section-blob-bottom-left" style={{ animationDelay: "2s" }} />
-        <div style={{ maxWidth: 780, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <div
+          className="blob-float"
+          style={{
+            position: "absolute",
+            top: "10%",
+            left: "-6%",
+            width: 320,
+            height: 320,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(139,92,246,.10) 0%, transparent 70%)",
+            pointerEvents: "none",
+            animationDelay: "1.5s",
+          }}
+        />
+        <div style={{ maxWidth: 880, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <h2
             style={{
               fontFamily: "var(--font-sora)",
@@ -263,19 +295,22 @@ export default function HomePage() {
           >
             Como funciona
           </h2>
-          <div style={{ position: "relative" }}>
-            <div
-              style={{
-                position: "absolute",
-                left: 21,
-                top: 12,
-                bottom: 12,
-                width: 2,
-                background: "var(--border)",
-              }}
-            />
+
+          <div className="etapas-row">
+            <div className="etapas-linha" />
             {ETAPAS.map((etapa, i) => (
-              <div key={etapa.titulo} style={{ display: "flex", gap: 24, marginBottom: i < ETAPAS.length - 1 ? 40 : 0, position: "relative" }}>
+              <div
+                key={etapa.titulo}
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
                 <div
                   style={{
                     width: 44,
@@ -286,24 +321,21 @@ export default function HomePage() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    flexShrink: 0,
                     fontFamily: "var(--font-sora)",
                     fontWeight: 800,
                     fontSize: 15,
                     boxShadow: "0 4px 14px rgba(59,130,246,.3)",
-                    zIndex: 1,
+                    marginBottom: 16,
                   }}
                 >
                   {i + 1}
                 </div>
-                <div style={{ paddingTop: 6 }}>
-                  <h3 style={{ fontFamily: "var(--font-sora)", fontWeight: 700, fontSize: 16, color: "var(--ocean)", marginBottom: 6 }}>
-                    {etapa.titulo}
-                  </h3>
-                  <p style={{ fontFamily: "var(--font-space-grotesk)", fontSize: 13.5, fontWeight: 300, color: "var(--gray-500)", lineHeight: 1.7, maxWidth: 440 }}>
-                    {etapa.descricao}
-                  </p>
-                </div>
+                <h3 style={{ fontFamily: "var(--font-sora)", fontWeight: 700, fontSize: 16, color: "var(--ocean)", marginBottom: 8 }}>
+                  {etapa.titulo}
+                </h3>
+                <p style={{ fontFamily: "var(--font-poppins)", fontSize: 13.5, fontWeight: 300, color: "var(--gray-500)", lineHeight: 1.7, maxWidth: 260 }}>
+                  {etapa.descricao}
+                </p>
               </div>
             ))}
           </div>
@@ -324,7 +356,7 @@ export default function HomePage() {
           <h2 style={{ fontFamily: "var(--font-sora)", fontWeight: 800, fontSize: 26, color: "#fff", marginBottom: 14 }}>
             Pronto pra ver onde seu RH está?
           </h2>
-          <p style={{ fontFamily: "var(--font-space-grotesk)", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,.7)", marginBottom: 32, lineHeight: 1.7 }}>
+          <p style={{ fontFamily: "var(--font-poppins)", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,.7)", marginBottom: 32, lineHeight: 1.7 }}>
             É gratuito, leva 10 minutos e o relatório fica pronto na hora.
           </p>
           <Link
@@ -338,7 +370,7 @@ export default function HomePage() {
               color: "var(--blue)",
               padding: "16px 34px",
               borderRadius: 100,
-              fontFamily: "var(--font-space-grotesk)",
+              fontFamily: "var(--font-sora)",
               fontWeight: 700,
               fontSize: 14,
               textDecoration: "none",
