@@ -38,6 +38,8 @@ create table if not exists raiox_leads (
   principais_areas text,
   contratacoes_6m text,
   desligamentos_6m text,
+  momento_empresa text,
+  junior_no_rh text,
 
   -- respostas cruas: { [questionId]: { nota: number, texto: string } }
   respostas jsonb not null,
