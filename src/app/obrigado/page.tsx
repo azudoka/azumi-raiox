@@ -91,7 +91,7 @@ export default function ObrigadoPage() {
             width={0}
             height={0}
             sizes="200px"
-            style={{ height: 52, width: "auto", objectFit: "contain" }}
+            style={{ height: 40, width: "auto", objectFit: "contain" }}
           />
         </div>
 

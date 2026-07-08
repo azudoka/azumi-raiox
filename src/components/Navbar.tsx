@@ -41,7 +41,7 @@ export function Navbar() {
             width={0}
             height={0}
             sizes="160px"
-            style={{ objectFit: "contain", height: 44, width: "auto" }}
+            style={{ objectFit: "contain", height: 34, width: "auto" }}
             priority
           />
         </Link>
