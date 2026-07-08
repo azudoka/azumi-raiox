@@ -354,12 +354,12 @@ export function Wizard() {
 
   // ── Questionário (etapas 1-N+1) ──────────────────────────────
   return (
-    <div style={{ maxWidth: 820, margin: "0 auto", padding: "32px 24px 100px" }}>
+    <div className="wizard-wrap" style={{ maxWidth: 820, margin: "0 auto", padding: "32px 24px 100px" }}>
       <ProgressBar etapaAtual={etapa} totalEtapas={TOTAL_ETAPAS} labelEtapa={labelEtapaAtual} />
 
       <div
         key={animKey}
-        className="fade-slide-in"
+        className="fade-slide-in wizard-card"
         style={{
           background: "#fff",
           borderRadius: 24,

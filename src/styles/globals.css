@@ -120,6 +120,17 @@ textarea {
   }
 }
 
+/* Wizard — reduz padding interno no mobile pra não apertar */
+@media (max-width: 600px) {
+  .wizard-card {
+    padding: 24px 20px !important;
+  }
+  .wizard-wrap {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
 /* Grid de 4 entregas — 4 colunas desktop */
 .entregas-grid {
   display: grid;

@@ -1,6 +1,7 @@
 "use client";
 
 import { Question } from "@/lib/questions";
+import { QUESTION_LABELS } from "@/lib/questionLabels";
 import { LevelSelector } from "./LevelSelector";
 
 interface QuestionCardProps {
@@ -66,7 +67,11 @@ export function QuestionCard({ question, nota, texto, onNotaChange, onTextoChang
         )}
       </div>
 
-      <LevelSelector value={nota} onChange={onNotaChange} />
+      <LevelSelector
+        value={nota}
+        onChange={onNotaChange}
+        labels={QUESTION_LABELS[question.id]}
+      />
 
       <textarea
         value={texto}
